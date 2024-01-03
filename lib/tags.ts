@@ -67,3 +67,5 @@ const TAG_DATA: Record<TagSlug, TagData> = {
     slug: TAG_SLUGS.All,
   },
 } as const;
+
+export const getTagDataBySlug = (slug: TagSlug): TagData => TAG_DATA[slug];

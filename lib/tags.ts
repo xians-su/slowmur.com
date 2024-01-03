@@ -63,7 +63,7 @@ const TAG_DATA: Record<TagSlug, TagData> = {
   },
   [TAG_SLUGS.All]: {
     name: 'All',
-    emoji: '🌴',
+    emoji: '',
     slug: TAG_SLUGS.All,
   },
 } as const;

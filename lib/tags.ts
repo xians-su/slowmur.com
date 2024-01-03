@@ -1,14 +1,14 @@
 import { ValueOf } from 'lib/types';
 
 const TAG_SLUGS = {
-  All: 'all',
+  Alls: 'alls',
   Murmur: 'murmur',
-  ThinkingFragments: 'thinking-fragments',
-  Link: 'link',
+  ThinkingFragment: 'thinking-fragment',
+  Links: 'links',
   LowCodeHacker: 'lowcode-hacker',
   Productivity: 'productivity',
   Playlist: 'playlist',
-  Reading: 'reading',
+  Readings: 'readings',
   FantasyBasketball: 'fantasy-basketball',
 } as const;
 
@@ -36,35 +36,35 @@ const TAG_DATA: Record<TagSlug, TagData> = {
     emoji: '🎵',
     slug: TAG_SLUGS.Playlist,
   },
-  [TAG_SLUGS.ThinkingFragments]: {
+  [TAG_SLUGS.ThinkingFragment]: {
     name: '思考碎片',
     emoji: '💭',
-    slug: TAG_SLUGS.ThinkingFragments,
+    slug: TAG_SLUGS.ThinkingFragment,
   },
-  [TAG_SLUGS.Link]: {
-    name: 'Link',
+  [TAG_SLUGS.Links]: {
+    name: 'Links',
     emoji: '🔗',
-    slug: TAG_SLUGS.Link,
+    slug: TAG_SLUGS.Links,
   },
   [TAG_SLUGS.FantasyBasketball]: {
     name: 'FantasyBasketball',
     emoji: '🏀',
     slug: TAG_SLUGS.FantasyBasketball,
   },
-  [TAG_SLUGS.Reading]: {
-    name: 'Reading',
+  [TAG_SLUGS.Readings]: {
+    name: 'Readings',
     emoji: '📚',
-    slug: TAG_SLUGS.Reading,
+    slug: TAG_SLUGS.Readings,
   },
   [TAG_SLUGS.Murmur]: {
     name: 'Murmur',
     emoji: '💫',
     slug: TAG_SLUGS.Murmur,
   },
-  [TAG_SLUGS.All]: {
-    name: 'All',
+  [TAG_SLUGS.Alls]: {
+    name: 'Alls',
     emoji: '🌴',
-    slug: TAG_SLUGS.All,
+    slug: TAG_SLUGS.Alls,
   },
 } as const;
 

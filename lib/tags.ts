@@ -1,14 +1,10 @@
 import { ValueOf } from 'lib/types';
 
 const TAG_SLUGS = {
-  Alls: 'alls',
   Murmur: 'murmur',
-  ThinkingFragment: 'thinking-fragment',
-  Links: 'links',
   LowCodeHacker: 'lowcode-hacker',
   Productivity: 'productivity',
   Playlist: 'playlist',
-  Readings: 'readings',
   FantasyBasketball: 'fantasy-basketball',
 } as const;
 
@@ -35,36 +31,15 @@ const TAG_DATA: Record<TagSlug, TagData> = {
     name: 'Playlist',
     emoji: '🎵',
     slug: TAG_SLUGS.Playlist,
-  },
-  [TAG_SLUGS.ThinkingFragment]: {
-    name: '思考碎片',
-    emoji: '💭',
-    slug: TAG_SLUGS.ThinkingFragment,
-  },
-  [TAG_SLUGS.Links]: {
-    name: 'Links',
-    emoji: '🔗',
-    slug: TAG_SLUGS.Links,
-  },
   [TAG_SLUGS.FantasyBasketball]: {
     name: 'FantasyBasketball',
     emoji: '🏀',
     slug: TAG_SLUGS.FantasyBasketball,
   },
-  [TAG_SLUGS.Readings]: {
-    name: 'Readings',
-    emoji: '📚',
-    slug: TAG_SLUGS.Readings,
-  },
   [TAG_SLUGS.Murmur]: {
     name: 'Murmur',
     emoji: '💫',
     slug: TAG_SLUGS.Murmur,
-  },
-  [TAG_SLUGS.Alls]: {
-    name: 'Alls',
-    emoji: '🌴',
-    slug: TAG_SLUGS.Alls,
   },
 } as const;
 

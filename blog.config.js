@@ -2,7 +2,7 @@
  * @type {import('~/types').BlogConfig}
  */
 const BLOG = {
-  title: '慢叨 Slowmur | Xians Su',
+  title: '慢叨 Slowmur',
   author: 'Xians Su',
   email: 'hi@xians.su',
   link: 'https://slowmur.com',
@@ -24,7 +24,7 @@ const BLOG = {
   // detail: https://github.com/yokinist/og-image/blob/main/api/_lib/types.ts#L2-L12
   socialLink: 'https://xians.su',
   seo: {
-    keywords: ['xians', 'Xians Su', 'slowmur', '慢叨', '興趣使然的分心學家'],
+    keywords: ['xians', 'Xians Su', 'slowmur', '慢叨', '不斷分心雜學者'],
     googleSiteVerification: '_1A8LqqSKVpDRvIVBJIzizKL9y5T7poSIDkc8TbS5m0', // Remove the value or replace it with your own google site verification code
   },
   notionPageId: process.env.NOTION_PAGE_ID, // DO NOT CHANGE THIS！！！

@@ -2,23 +2,14 @@ import { ValueOf } from 'lib/types';
 
 const TAG_SLUGS = {
   All: 'all',
-  Tech: 'tech',
-  Update: 'update',
-  Music: 'music',
-  Book: 'book',
-  Playlist: 'playlist',
-  CultureBook: 'culture-book',
-  Art: 'art',
-  Food: 'food',
-  Event: 'event',
-  Diary: 'diary',
+  Murmur: 'murmur',
   ThinkingFragments: 'thinking-fragments',
-  Sento: 'sento',
   Link: 'link',
-  ProductDev: 'product-dev',
-  Sauna: 'sauna',
-  Items: 'items',
-  Notion: 'notion',
+  LowCodeHacker: 'lowcode-hacker',
+  Productivity: 'productivity',
+  Playlist: 'playlist',
+  Reading: 'reading',
+  FantasyBasketball: 'fantasy-basketball',
 } as const;
 
 export type TagSlug = ValueOf<typeof TAG_SLUGS>;
@@ -30,90 +21,45 @@ type TagData = {
 };
 
 const TAG_DATA: Record<TagSlug, TagData> = {
-  [TAG_SLUGS.Tech]: {
-    name: '技術',
-    emoji: '💻',
-    slug: TAG_SLUGS.Tech,
+  [TAG_SLUGS.LowCodeHacker]: {
+    name: 'LowCode-Hacker',
+    emoji: '👾',
+    slug: TAG_SLUGS.LowCodeHacker,
   },
-  [TAG_SLUGS.Update]: {
-    name: 'アップデート',
-    emoji: '📝',
-    slug: TAG_SLUGS.Update,
-  },
-  [TAG_SLUGS.Music]: {
-    name: '音楽',
-    emoji: '🎵',
-    slug: TAG_SLUGS.Music,
+  [TAG_SLUGS.Productivity]: {
+    name: 'productivity',
+    emoji: '🛠️',
+    slug: TAG_SLUGS.Productivity,
   },
   [TAG_SLUGS.Playlist]: {
-    name: 'プレイリスト',
-    emoji: '🎧',
+    name: 'Playlist',
+    emoji: '🎵',
     slug: TAG_SLUGS.Playlist,
   },
   [TAG_SLUGS.ThinkingFragments]: {
-    name: '思考の断片',
+    name: '思考碎片',
     emoji: '💭',
     slug: TAG_SLUGS.ThinkingFragments,
   },
-  [TAG_SLUGS.Sento]: {
-    name: '銭湯',
-    emoji: '♨️',
-    slug: TAG_SLUGS.Sento,
-  },
-  [TAG_SLUGS.Sauna]: {
-    name: 'サウナ',
-    emoji: '🧖‍♂️',
-    slug: TAG_SLUGS.Sauna,
-  },
   [TAG_SLUGS.Link]: {
-    name: '外部リンク',
+    name: 'Link',
     emoji: '🔗',
     slug: TAG_SLUGS.Link,
   },
-  [TAG_SLUGS.ProductDev]: {
-    name: 'プロダクト開発',
-    emoji: '🛠',
-    slug: TAG_SLUGS.ProductDev,
+  [TAG_SLUGS.FantasyBasketball]: {
+    name: 'FantasyBasketball',
+    emoji: '🏀',
+    slug: TAG_SLUGS.FantasyBasketball,
   },
-  [TAG_SLUGS.Items]: {
-    name: 'アイテム',
-    emoji: '✨',
-    slug: TAG_SLUGS.Items,
-  },
-  [TAG_SLUGS.Notion]: {
-    name: 'Notion',
-    emoji: '📓',
-    slug: TAG_SLUGS.Notion,
-  },
-  [TAG_SLUGS.CultureBook]: {
-    name: 'カルチャーブック',
-    emoji: '📖',
-    slug: TAG_SLUGS.CultureBook,
-  },
-  [TAG_SLUGS.Book]: {
-    name: '本',
+  [TAG_SLUGS.Reading]: {
+    name: 'Reading',
     emoji: '📚',
-    slug: TAG_SLUGS.Book,
+    slug: TAG_SLUGS.Reading,
   },
-  [TAG_SLUGS.Art]: {
-    name: '美術・芸術',
-    emoji: '🖼️',
-    slug: TAG_SLUGS.Art,
-  },
-  [TAG_SLUGS.Food]: {
-    name: '食',
-    emoji: '🍙',
-    slug: TAG_SLUGS.Food,
-  },
-  [TAG_SLUGS.Event]: {
-    name: 'イベント',
-    emoji: '🎪',
-    slug: TAG_SLUGS.Event,
-  },
-  [TAG_SLUGS.Diary]: {
-    name: '近況報告',
-    emoji: '📢',
-    slug: TAG_SLUGS.Diary,
+  [TAG_SLUGS.Murmur]: {
+    name: 'Murmur',
+    emoji: '💫',
+    slug: TAG_SLUGS.Murmur,
   },
   [TAG_SLUGS.All]: {
     name: 'All',

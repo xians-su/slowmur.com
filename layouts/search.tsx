@@ -29,7 +29,7 @@ export const SearchLayout: React.VFC<Props> = ({ tags, posts, currentTag }) => {
 
   const currentTagName: string | undefined = useMemo(() => {
     if (!currentTag) return undefined;
-    return getTagDataBySlug(currentTag as TagSlug)?.name ?? currentTagName;
+    return getTagDataBySlug(currentTag as TagSlug)?.name ?? currentTag;
   }, [currentTag]);
 
   if (!locale) return null;

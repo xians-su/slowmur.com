@@ -15,6 +15,7 @@ import { useLocale } from '~/lib/i18n/locale';
 import { Post } from '~/types';
 
 const enableCommentArea = BLOG.comment.provider !== '';
+const SideTOC = dynamic(() => import("@/components/SideTOC"), { ssr: false });
 
 const mapPageUrl = (id: string) => {
   return 'https://www.notion.so/' + id.replace(/-/g, '');
@@ -120,6 +121,13 @@ export const Layout: React.VFC<Props> = ({
           ↑ {locale?.POST.TOP}
         </button>
       </div>
+        <SideTOC
+          links={links}
+          posRef={articleRef}
+          minLevel={minLevel}
+          pause={isBackingTop}
+          anchorName="notion-header-anchor"
+        />
       <Comments post={post} />
     </Container>
   );

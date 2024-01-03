@@ -12,7 +12,24 @@ const TAG_SLUGS = {
   FantasyBasketball: 'fantasy-basketball',
 } as const;
 
-	@@ -36,35 +36,35 @@ const TAG_DATA: Record<TagSlug, TagData> = {
+export type TagSlug = ValueOf<typeof TAG_SLUGS>;
+
+type TagData = {
+  slug: string;
+  name: string;
+  emoji: string;
+};
+
+const TAG_DATA: Record<TagSlug, TagData> = {
+  [TAG_SLUGS.LowCodeHacker]: {
+    emoji: '👾',
+    slug: TAG_SLUGS.LowCodeHacker,
+  },
+  [TAG_SLUGS.Productivity]: {
+    emoji: '🛠️',
+    slug: TAG_SLUGS.Productivity,
+  },
+  [TAG_SLUGS.Playlist]: {
     emoji: '🎵',
     slug: TAG_SLUGS.Playlist,
   },

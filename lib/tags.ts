@@ -62,7 +62,7 @@ const TAG_DATA: Record<TagSlug, TagData> = {
     slug: TAG_SLUGS.Murmur,
   },
   [TAG_SLUGS.All]: {
-    name: '🌴 All',
+    name: '🌴All',
     emoji: '',
     slug: TAG_SLUGS.All,
   },

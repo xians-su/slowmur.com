@@ -3,7 +3,7 @@
  */
 const BLOG = {
   title: '慢叨 Slowmur',
-  author: 'Xians Su',
+  author: 'Xians',
   email: 'hi@xians.su',
   link: 'https://slowmur.com',
   externalHPLink: 'https://xians.su',

@@ -85,7 +85,7 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, ...meta }) =>
           type: meta.type ?? 'website',
           description: meta.description,
           image: getOGImageURL({
-            title: '',
+            title: Sitetitle,
             root,
             twitter: false,
           }),

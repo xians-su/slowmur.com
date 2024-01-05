@@ -48,8 +48,8 @@ export const getOGImageURL = ({ title, twitter, root }: GetOGImageUrlArgs): stri
       baseParams +
       convertObjToQueryString({
         ...defaultParams,
-        siteTitle: undefined,
-        isTwitter: 'true',
+ //       siteTitle: undefined,
+ //       isTwitter: 'true',
       })
     );
   }
@@ -58,7 +58,7 @@ export const getOGImageURL = ({ title, twitter, root }: GetOGImageUrlArgs): stri
       baseParams +
       convertObjToQueryString({
         ...defaultParams,
-        siteTitle: undefined,
+ //       siteTitle: undefined,
       })
     );
   }

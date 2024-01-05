@@ -56,15 +56,17 @@ export const Layout: React.VFC<Props> = ({
 
   useEffect(() => {
     const links = document.querySelectorAll(".notion-h");
-    const linksArr: Link[] = Array.from(links).map(({ dataset, outerText, localName }) => ({
-      id: dataset.id,
-      title: outerText,
-      // 確保 level 是數字類型
-      level: parseInt(localName.substring(1), 10),
-    }));
-    // 計算最小 level，預設為 2
+    const linksArr: Link[] = Array.from(links).map((element) => {
+      // 這裡使用類型斷言將 element 斷言為 HTMLElement
+      const htmlElement = element as HTMLElement;
+
+      return {
+        id: htmlElement.dataset.id,
+        title: htmlElement.outerText,
+        level: parseInt(htmlElement.localName.substring(1), 10),
+      };
+    });
     const level: number = linksArr.length > 0 ? Math.min(...linksArr.map(link => link.level)) : 2;
-    // 更新狀態
     setLinks({ links: linksArr, minLevel: level });
   }, []);
     

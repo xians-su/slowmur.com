@@ -60,14 +60,15 @@ const SideTOC: React.FC<SideTOCProps> = ({
     tocRef.current?.scrollTo({ top: active - 100, behavior: "smooth" });
   }, [activeLink, pause, _links]);
 
-  const handleScrollDirection = () => {
-    setActiveLink(getActiveLinkID());
-    if (window.scrollY < visibleHeight) {
-      setShow(false);
-    } else {
-      setShow(true);
-    }
-  };
+const handleScrollDirection = () => {
+  const activeId = getActiveLinkID();
+  setActiveLink(activeId !== undefined ? activeId : null); // 使用三元運算符來確保傳遞 string | null 而非 undefined
+  if (window.scrollY < visibleHeight) {
+    setShow(false);
+  } else {
+    setShow(true);
+  }
+};
 
   const handleResize = () => {
     setAnchor(posRef.current?.getBoundingClientRect().right || 0);

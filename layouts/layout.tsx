@@ -51,8 +51,6 @@ export const Layout: React.VFC<Props> = ({
   const locale = useLocale();
   const router = useRouter();
   
-  const YourComponent: React.FC = () => {
-  // 為 useState 添加類型
   const [{ links, minLevel }, setLinks] = useState<{ links: Link[]; minLevel: number }>({ links: [], minLevel: 1 });
 
   useEffect(() => {
@@ -135,6 +133,7 @@ export const Layout: React.VFC<Props> = ({
           'mb-4': enableCommentArea,
         })}
       >
+        
          <SideTOC
           links={links}
           posRef={articleRef}

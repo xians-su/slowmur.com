@@ -30,7 +30,7 @@ export const getOGImageURL = ({ title, twitter, root }: GetOGImageUrlArgs): stri
     fontSize: '',
     background: '',
     foreground: '',
-    siteTitle: encodeURIComponent(BLOG.title),
+    siteTitle: '',
     isTwitter: undefined,
   };
   const baseParams = `${BLOG.ogImageGenerateURL}/api/og?title=${encodeURIComponent(title)}&desc=Slowmur.com`;

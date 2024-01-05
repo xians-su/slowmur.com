@@ -50,9 +50,9 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, ...meta }) =>
     return url;
   }, [meta]);
 
-  const siteTitle = useMemo(() => {
-    return meta.title ?? BLOG.title;
-  }, [meta]);
+ // const siteTitle = useMemo(() => {
+ //   return meta.title ?? BLOG.title;
+ // }, [meta]);
 
   useEffect(() => {
     if (alreadySet || meta.type !== 'article' || !meta) return;
@@ -117,7 +117,7 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, ...meta }) =>
         )}
         twitter={{
           card: 'summary_large_image',
-          site: '@yokinist',
+          site: '@XiansSu',
         }}
       />
       <div

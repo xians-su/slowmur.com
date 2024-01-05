@@ -16,6 +16,8 @@ import { Post } from '~/types';
 
 const enableCommentArea = BLOG.comment.provider !== '';
 
+const SideTOC = dynamic(() => import("@/components/SideTOC"), { ssr: false });
+
 const mapPageUrl = (id: string) => {
   return 'https://www.notion.so/' + id.replace(/-/g, '');
 };
@@ -107,6 +109,15 @@ export const Layout: React.VFC<Props> = ({
           'mb-4': enableCommentArea,
         })}
       >
+        {frontMatter.slug !== "about" && (
+         <SideTOC
+          links={links}
+          posRef={articleRef}
+          minLevel={minLevel}
+          pause={isBackingTop}
+          anchorName="notion-header-anchor"
+         />
+        )}
         <button
           onClick={() => router.push(BLOG.path || '/')}
           className="mt-2 hover:text-black dark:hover:text-gray-100 cursor-pointer"

@@ -28,8 +28,8 @@ export const getOGImageURL = ({ title, twitter, root }: GetOGImageUrlArgs): stri
   const defaultParams: OGImageQuery = {
     md: '',
     fontSize: '',
-    background: encodeURIComponent(),
-    foreground: encodeURIComponent(),
+    background: '',
+    foreground: '',
     siteTitle: encodeURIComponent(BLOG.title),
     isTwitter: undefined,
   };

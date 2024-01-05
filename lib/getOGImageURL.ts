@@ -26,12 +26,12 @@ const convertObjToQueryString = (query: OGImageQuery): string => {
 
 export const getOGImageURL = ({ title, twitter, root }: GetOGImageUrlArgs): string => {
   const defaultParams: OGImageQuery = {
-    md: '1',
-    fontSize: '96px',
-    background: encodeURIComponent(BLOG.darkBackground),
-    foreground: encodeURIComponent(BLOG.lightBackground),
+    //md: '1',
+    //fontSize: '96px',
+    //background: encodeURIComponent(BLOG.darkBackground),
+    //foreground: encodeURIComponent(BLOG.lightBackground),
     siteTitle: encodeURIComponent(BLOG.title),
-    isTwitter: undefined,
+    //isTwitter: undefined,
   };
   const baseParams = `${BLOG.ogImageGenerateURL}/api/og?title=${encodeURIComponent(title)}&desc=Slowmur.com.png?`;
   if (twitter) {

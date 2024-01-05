@@ -16,8 +16,6 @@ import { Post } from '~/types';
 
 const enableCommentArea = BLOG.comment.provider !== '';
 
-const SideTOC = dynamic(() => import("~/components/SideTOC"), { ssr: false });
-
 const mapPageUrl = (id: string) => {
   return 'https://www.notion.so/' + id.replace(/-/g, '');
 };

@@ -24,16 +24,16 @@ const convertObjToQueryString = (query: OGImageQuery): string => {
     .join('&');
 };
 
-export const getOGImageURL = ({ title, twitter, root }: GetOGImageUrlArgs): string => {
-  const defaultParams: OGImageQuery = {
-    md: '',
-    fontSize: '',
-    background: '',
-    foreground: '',
-    siteTitle: encodeURIComponent(BLOG.title),
-    isTwitter: undefined,
-  };
-  const baseParams = `${BLOG.ogImageGenerateURL}/api/og?title=${encodeURIComponent(title)}`;
+//export const getOGImageURL = ({ title, twitter, root }: GetOGImageUrlArgs): string => {
+//  const defaultParams: OGImageQuery = {
+//    md: '',
+//    fontSize: '',
+//    background: '',
+//    foreground: '',
+//    siteTitle: encodeURIComponent(BLOG.title),
+//    isTwitter: undefined,
+//  };
+  const baseParams = `${BLOG.ogImageGenerateURL}/api/og?title=${encodeURIComponent(title)}&desc=Slowmur.com`;
   if (twitter) {
     if (!root) {
       return (

@@ -110,7 +110,6 @@ export const Layout: React.VFC<Props> = ({
           'mb-4': enableCommentArea,
         })}
       >
-        {frontMatter.slug !== "about" && (
          <SideTOC
           links={links}
           posRef={articleRef}
@@ -118,7 +117,6 @@ export const Layout: React.VFC<Props> = ({
           pause={isBackingTop}
           anchorName="notion-header-anchor"
          />
-        )}
         <button
           onClick={() => router.push(BLOG.path || '/')}
           className="mt-2 hover:text-black dark:hover:text-gray-100 cursor-pointer"

@@ -53,22 +53,6 @@ export const Layout: React.VFC<Props> = ({
   const router = useRouter();
   
   const [{ links, minLevel }, setLinks] = useState<{ links: Link[]; minLevel: number }>({ links: [], minLevel: 1 });
-
-  useEffect(() => {
-    const links = document.querySelectorAll(".notion-h");
-    const linksArr: Link[] = Array.from(links).map((element) => {
-      // 這裡使用類型斷言將 element 斷言為 HTMLElement
-      const htmlElement = element as HTMLElement;
-
-      return {
-        id: htmlElement.dataset.id,
-        title: htmlElement.outerText,
-        level: parseInt(htmlElement.localName.substring(1), 10),
-      };
-    });
-    const level: number = linksArr.length > 0 ? Math.min(...linksArr.map(link => link.level)) : 2;
-    setLinks({ links: linksArr, minLevel: level });
-  }, []);
     
   const { theme } = useTheme();
 

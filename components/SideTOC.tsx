@@ -1,7 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 
-const SideTOC = ({
+// 定義 Link 物件的接口
+interface Link {
+  id: string;
+  title: string;
+  level: number;
+  active?: boolean;
+}
+
+// 定義組件 props 的接口
+interface SideTOCProps {
+  links: Link[];
+  posRef: React.RefObject<HTMLElement>;
+  anchorName: string;
+  minLevel: number;
+  visibleHeight?: number;
+  pause: boolean;
+}
+
+const SideTOC: React.FC<SideTOCProps> = ({
   links: _links,
   posRef,
   anchorName,
@@ -9,26 +27,27 @@ const SideTOC = ({
   visibleHeight = 48,
   pause,
 }) => {
-  const [show, setShow] = useState(false);
-  const [anchor, setAnchor] = useState(0);
-  const [links, setLinks] = useState(_links);
-  const [activeLink, setActiveLink] = useState(null);
-  const tocRef = useRef();
+  const [show, setShow] = useState<boolean>(false);
+  const [anchor, setAnchor] = useState<number>(0);
+  const [links, setLinks] = useState<Link[]>(_links);
+  const [activeLink, setActiveLink] = useState<string | null>(null);
+  const tocRef = useRef<HTMLElement | null>(null);
 
-  const getActiveLinkID = () =>
-    Array.from(document.querySelectorAll(`.${anchorName}`))
+  const getActiveLinkID = (): string | undefined => {
+    return Array.from(document.querySelectorAll(`.${anchorName}`))
       .map((anchor) => ({
         top: anchor.getBoundingClientRect().top,
         id: anchor.id,
       }))
       .filter((item) => item.top <= 10)
       .sort((a, b) => b.top - a.top)[0]?.id;
+  };
 
   useEffect(() => {
     if (pause) return;
 
     setLinks(
-      _links.reduce((prev, curr) => {
+      _links.reduce((prev: Link[], curr: Link) => {
         if (curr.id === activeLink) {
           prev.push({ ...curr, active: true });
         } else prev.push({ ...curr, active: false });
@@ -36,12 +55,10 @@ const SideTOC = ({
       }, [])
     );
 
-    const active =
-      document.getElementById(`link-${activeLink}`)?.offsetTop + 40;
+    const active = document.getElementById(`link-${activeLink}`)?.offsetTop || 0;
 
-    tocRef.current &&
-      tocRef.current.scrollTo({ top: active - 100, behavior: "smooth" });
-  }, [activeLink, pause]);
+    tocRef.current?.scrollTo({ top: active - 100, behavior: "smooth" });
+  }, [activeLink, pause, _links]);
 
   const handleScrollDirection = () => {
     setActiveLink(getActiveLinkID());
@@ -53,7 +70,7 @@ const SideTOC = ({
   };
 
   const handleResize = () => {
-    setAnchor(posRef.current.getBoundingClientRect().right);
+    setAnchor(posRef.current?.getBoundingClientRect().right || 0);
   };
 
   useEffect(() => {
@@ -75,7 +92,7 @@ const SideTOC = ({
         show ? "scale-100" : "lg:scale-0 lg:opacity-0"
       }`}
       style={{
-        left: anchor + 40 + "px",
+        left: `${anchor + 40}px`,
       }}
     >
       <ul className="border-gray-300 dark:border-gray-700 border-l-[1px]">
@@ -84,7 +101,7 @@ const SideTOC = ({
             key={id}
             id={`link-${id}`}
             className={active ? "active-anchor-link" : ""}
-            style={{ marginLeft: level - minLevel + "rem" }}
+            style={{ marginLeft: `${level - minLevel}rem` }}
           >
             <a href={`#${id}`}>{title}</a>
           </li>

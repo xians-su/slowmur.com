@@ -33,7 +33,7 @@ export const getOGImageURL = ({ title, twitter, root }: GetOGImageUrlArgs): stri
     siteTitle: '',
     isTwitter: undefined,
   };
-  const baseParams = `${BLOG.ogImageGenerateURL}/api/og?title=${encodeURIComponent(title)}&desc=Slowmur.com&siteName=by%20Xians`;
+  const baseParams = `${BLOG.ogImageGenerateURL}/api/og?title=${encodeURIComponent(title)}&desc=by%20Xians&siteName=Slowmur.com`;
   if (twitter) {
     if (!root) {
       return (

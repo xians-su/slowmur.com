@@ -13,6 +13,7 @@ import { TagItem } from '~/components/Tag';
 import formatDate from '~/lib/formatDate';
 import { useLocale } from '~/lib/i18n/locale';
 import { Post } from '~/types';
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const enableCommentArea = BLOG.comment.provider !== '';
 

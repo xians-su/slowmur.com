@@ -5,8 +5,11 @@ import { useEffect, useMemo, useState } from 'react';
 import BLOG from '~/blog.config';
 import { Footer, Header } from '~/components';
 import { getOGImageURL } from '~/lib/getOGImageURL';
+
 // import BlogPost from './BlogPost'
+
 type NextHeadSeoProps = Parameters<typeof NextHeadSeo>[0];
+
 type Props = {
   children: React.ReactNode;
   layout?: 'blog';

@@ -74,8 +74,10 @@ type Props = {
   slug?: string | null;
 };
 
-export const Layout: React.VFC<Props> = ({
+const Layout: = ({
+  children,
   blockMap,
+  frontMatter,
   post,
   emailHash,
   tweet,
@@ -86,6 +88,9 @@ export const Layout: React.VFC<Props> = ({
   const locale = useLocale();
   const router = useRouter();
   const { theme } = useTheme();
+  const [{ links, minLevel }, setLinks] = useState({ links: [], minLevel: 1 });
+  const [isBackingTop, setIsBackingTop] = useState(false);
+  const articleRef = useRef();
 
   const renderContents = () => (
     <article>
@@ -145,7 +150,7 @@ export const Layout: React.VFC<Props> = ({
       fullWidth={fullWidth}
       slug={slug}
     >
-//
+      
   useEffect(() => {
     if (pause) return;
 
@@ -218,6 +223,7 @@ const handleScrollDirection = () => {
 
 export default React.memo(SideTOC);
 //
+      
       {renderContents()}
       <div
         className={classNames('flex justify-between font-medium text-gray-500 dark:text-gray-400', {

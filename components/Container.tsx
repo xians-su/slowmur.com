@@ -79,17 +79,6 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, ...meta }) =>
             root,
             twitter: false,
           }),
-
-    
-          
-            
-    
-
-          
-          Expand Down
-    
-    
-  
         }}
         customMetaTags={(customMetaTags ?? []).concat(
           {

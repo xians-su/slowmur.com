@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from 'react';
 import BLOG from '~/blog.config';
 import { Footer, Header } from '~/components';
 import { getOGImageURL } from '~/lib/getOGImageURL';
+import dynamic from "next/dynamic";
 
 // import BlogPost from './BlogPost'
 

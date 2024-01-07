@@ -161,3 +161,9 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, ...meta }) =>
     </div>
   );
 };
+
+Container.propTypes = {
+  children: PropTypes.node,
+};
+
+export default Container;

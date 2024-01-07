@@ -8,6 +8,8 @@ import { getOGImageURL } from '~/lib/getOGImageURL';
 
 // import BlogPost from './BlogPost'
 
+const SideTOC = dynamic(() => import("~/components/SideTOC"), { ssr: false });
+
 type NextHeadSeoProps = Parameters<typeof NextHeadSeo>[0];
 
 type Props = {
@@ -135,6 +137,11 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, ...meta }) =>
         >
           {children}
         </main>
+                        <SideTOC
+                  links={toc.links}
+                  minLevel={toc.minLevel}
+                  anchorName="notion-header-anchor"
+                />
         <Footer fullWidth={fullWidth} />
       </div>
     </div>

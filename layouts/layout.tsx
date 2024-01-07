@@ -86,6 +86,65 @@ export const Layout: React.VFC<Props> = ({
   const locale = useLocale();
   const router = useRouter();
   const { theme } = useTheme();
+
+  const renderContents = () => (
+    <article>
+      <h1 className="text-3xl font-bold text-black dark:text-white">{post.title}</h1>
+      {post?.type?.[0] !== 'Page' && (
+        <nav className="flex items-start mt-7 mb-4 text-gray-500 dark:text-gray-300">
+          <div className="flex mb-4">
+            <a href={BLOG.socialLink || '#'} className="flex">
+              <Image
+                alt={BLOG.author}
+                width={24}
+                height={24}
+                src={`https://gravatar.com/avatar/${emailHash}`}
+                className="rounded-full"
+              />
+              <p className="md:block ml-2">{BLOG.author}</p>
+            </a>
+            <span className="block">&nbsp;/&nbsp;</span>
+          </div>
+          <div className="mr-2 mb-4 md:ml-0">{formatDate(post?.date?.start_date || post.createdTime, BLOG.lang)}</div>
+          {post.tags && (
+            <div className="flex overflow-x-auto flex-nowrap max-w-full article-tags">
+              {post.tags.map((tag) => (
+                <TagItem key={tag} tag={tag} />
+              ))}
+            </div>
+          )}
+        </nav>
+      )}
+      {blockMap && (
+        <div className="-mt-4 mb-4 notion-ignore-padding-x">
+          <NotionRenderer
+            recordMap={blockMap}
+            components={{
+              equation: Equation,
+              code: Code,
+              collection: Collection,
+              collectionRow: CollectionRow,
+              tweet: tweet,
+            }}
+            mapPageUrl={mapPageUrl}
+            darkMode={theme !== 'light'}
+          />
+        </div>
+      )}
+    </article>
+  );
+  return onlyContents ? (
+    renderContents()
+  ) : (
+    <Container
+      layout="blog"
+      title={post.title}
+      description={post.summary}
+      date={new Date(post.createdTime).toISOString()}
+      type="article"
+      fullWidth={fullWidth}
+      slug={slug}
+    >
 //
   useEffect(() => {
     if (pause) return;
@@ -159,64 +218,6 @@ const handleScrollDirection = () => {
 
 export default React.memo(SideTOC);
 //
-  const renderContents = () => (
-    <article>
-      <h1 className="text-3xl font-bold text-black dark:text-white">{post.title}</h1>
-      {post?.type?.[0] !== 'Page' && (
-        <nav className="flex items-start mt-7 mb-4 text-gray-500 dark:text-gray-300">
-          <div className="flex mb-4">
-            <a href={BLOG.socialLink || '#'} className="flex">
-              <Image
-                alt={BLOG.author}
-                width={24}
-                height={24}
-                src={`https://gravatar.com/avatar/${emailHash}`}
-                className="rounded-full"
-              />
-              <p className="md:block ml-2">{BLOG.author}</p>
-            </a>
-            <span className="block">&nbsp;/&nbsp;</span>
-          </div>
-          <div className="mr-2 mb-4 md:ml-0">{formatDate(post?.date?.start_date || post.createdTime, BLOG.lang)}</div>
-          {post.tags && (
-            <div className="flex overflow-x-auto flex-nowrap max-w-full article-tags">
-              {post.tags.map((tag) => (
-                <TagItem key={tag} tag={tag} />
-              ))}
-            </div>
-          )}
-        </nav>
-      )}
-      {blockMap && (
-        <div className="-mt-4 mb-4 notion-ignore-padding-x">
-          <NotionRenderer
-            recordMap={blockMap}
-            components={{
-              equation: Equation,
-              code: Code,
-              collection: Collection,
-              collectionRow: CollectionRow,
-              tweet: tweet,
-            }}
-            mapPageUrl={mapPageUrl}
-            darkMode={theme !== 'light'}
-          />
-        </div>
-      )}
-    </article>
-  );
-  return onlyContents ? (
-    renderContents()
-  ) : (
-    <Container
-      layout="blog"
-      title={post.title}
-      description={post.summary}
-      date={new Date(post.createdTime).toISOString()}
-      type="article"
-      fullWidth={fullWidth}
-      slug={slug}
-    >
       {renderContents()}
       <div
         className={classNames('flex justify-between font-medium text-gray-500 dark:text-gray-400', {

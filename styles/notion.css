@@ -195,7 +195,7 @@ pre[class*='language-'] > code {
 }
 
 /* for profile image block */
-.notion-block-ff7d6f513c0342fb9209543568484095 > div > img {
+.notion-block-2835996fb9d942248b4f87f4d2514b91 > div > img {
   animation: fluid 24s ease 0s infinite;
   border-radius: 63% 37% 54% 46%/55% 48% 52% 45%;
   min-width: 192px;
@@ -231,6 +231,6 @@ pre[class*='language-'] > code {
 }
 
 /* for about embed */
-.notion-block-2835996fb9d942248b4f87f4d2514b91 > div {
+.notion-block-5550b6d861c44cbd86d2544970284f81 > div {
   height: 100vh !important;
 }

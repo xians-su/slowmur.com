@@ -34,7 +34,6 @@ interface SideTOCProps {
   visibleHeight?: number;
   pause: boolean;
 }
-const SideTOC = dynamic(() => import("~/components/SideTOC"), { ssr: false });
 const SideTOC: React.FC<SideTOCProps> = ({
   links: _links,
   posRef,

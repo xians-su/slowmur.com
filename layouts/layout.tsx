@@ -11,53 +11,10 @@ import { Container } from '~/components';
 import { Comments } from '~/components/Comment';
 import { TagItem } from '~/components/Tag';
 import formatDate from '~/lib/formatDate';
+import { getTwitterShareUrl } from '~/lib/getTwitterShareUrl';
 import { useLocale } from '~/lib/i18n/locale';
 import { Post } from '~/types';
-//
-import React, { useEffect, useRef, useState } from "react";
-import ReactDOM from "react-dom";
 
-// 定義 Link 物件的接口
-interface Link {
-  id: string;
-  title: string;
-  level: number;
-  active?: boolean;
-}
-
-// 定義組件 props 的接口
-interface SideTOCProps {
-  links: Link[];
-  posRef: React.RefObject<HTMLElement>;
-  anchorName: string;
-  minLevel: number;
-  visibleHeight?: number;
-  pause: boolean;
-}
-const SideTOC: React.FC<SideTOCProps> = ({
-  links: _links,
-  posRef,
-  anchorName,
-  minLevel,
-  visibleHeight = 48,
-  pause,
-}) => {
-  const [show, setShow] = useState<boolean>(false);
-  const [anchor, setAnchor] = useState<number>(0);
-  const [links, setLinks] = useState<Link[]>(_links);
-  const [activeLink, setActiveLink] = useState<string | null>(null);
-  const tocRef = useRef<HTMLElement | null>(null);
-
-  const getActiveLinkID = (): string | undefined => {
-    return Array.from(document.querySelectorAll(`.${anchorName}`))
-      .map((anchor) => ({
-        top: anchor.getBoundingClientRect().top,
-        id: anchor.id,
-      }))
-      .filter((item) => item.top <= 10)
-      .sort((a, b) => b.top - a.top)[0]?.id;
-  };
-//
 const enableCommentArea = BLOG.comment.provider !== '';
 
 const mapPageUrl = (id: string) => {
@@ -74,10 +31,8 @@ type Props = {
   slug?: string | null;
 };
 
-const Layout: = ({
-  children,
+export const Layout: React.VFC<Props> = ({
   blockMap,
-  frontMatter,
   post,
   emailHash,
   tweet,
@@ -88,9 +43,6 @@ const Layout: = ({
   const locale = useLocale();
   const router = useRouter();
   const { theme } = useTheme();
-  const [{ links, minLevel }, setLinks] = useState({ links: [], minLevel: 1 });
-  const [isBackingTop, setIsBackingTop] = useState(false);
-  const articleRef = useRef();
 
   const renderContents = () => (
     <article>
@@ -150,93 +102,30 @@ const Layout: = ({
       fullWidth={fullWidth}
       slug={slug}
     >
-      
-  useEffect(() => {
-    if (pause) return;
-
-    setLinks(
-      _links.reduce((prev: Link[], curr: Link) => {
-        if (curr.id === activeLink) {
-          prev.push({ ...curr, active: true });
-        } else prev.push({ ...curr, active: false });
-        return prev;
-      }, [])
-    );
-
-    const active = document.getElementById(`link-${activeLink}`)?.offsetTop || 0;
-
-    tocRef.current?.scrollTo({ top: active - 100, behavior: "smooth" });
-  }, [activeLink, pause, _links]);
-
-const handleScrollDirection = () => {
-  const activeId = getActiveLinkID();
-  setActiveLink(activeId !== undefined ? activeId : null); // 使用三元運算符來確保傳遞 string | null 而非 undefined
-  if (window.scrollY < visibleHeight) {
-    setShow(false);
-  } else {
-    setShow(true);
-  }
-};
-
-  const handleResize = () => {
-    setAnchor(posRef.current?.getBoundingClientRect().right || 0);
-  };
-
-  useEffect(() => {
-    handleResize();
-    window.addEventListener("scroll", handleScrollDirection);
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("scroll", handleScrollDirection);
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  if (links.length === 0) return null;
-
-  return ReactDOM.createPortal(
-    <nav
-      ref={tocRef}
-      className={`toc fixed top-24 bottom-8 w-[100%] origin-[0_0] overflow-y-auto border-gray-300 dark:border-gray-700 opacity-0 scale-0 lg:opacity-100 lg:scale-100 ${
-        show ? "scale-100" : "lg:scale-0 lg:opacity-0"
-      }`}
-      style={{
-        left: `${anchor + 40}px`,
-      }}
-    >
-      <ul className="border-gray-300 dark:border-gray-700 border-l-[1px]">
-        {links.map(({ id, title, level, active }) => (
-          <li
-            key={id}
-            id={`link-${id}`}
-            className={active ? "active-anchor-link" : ""}
-            style={{ marginLeft: `${level - minLevel}rem` }}
-          >
-            <a href={`#${id}`}>{title}</a>
-          </li>
-        ))}
-      </ul>
-    </nav>,
-    document.body
-  );
-};
-
-export default React.memo(SideTOC);
-//
-      
       {renderContents()}
+      <div className="mb-4">
+        <div>---</div>
+        <div className="flex">
+          <a
+            href={getTwitterShareUrl({
+              text: post?.title ?? BLOG.title,
+              url: BLOG.link + '/' + slug,
+              via: BLOG.author,
+            })}
+            target="_blank"
+            rel="noreferrer noopener"
+            aria-label="share with twitter"
+            className="ml-auto text-blue-700 dark:text-blue-400 underline border-blue-700 dark:border-blue-400 cursor-pointer"
+          >
+            {locale?.POST.SHARE}
+          </a>
+        </div>
+      </div>
       <div
         className={classNames('flex justify-between font-medium text-gray-500 dark:text-gray-400', {
           'mb-4': enableCommentArea,
         })}
       >
-        <SideTOC
-          links={links}
-          posRef={articleRef}
-          minLevel={minLevel}
-          pause={isBackingTop}
-          anchorName="notion-header-anchor"
-        />
         <button
           onClick={() => router.push(BLOG.path || '/')}
           className="mt-2 hover:text-black dark:hover:text-gray-100 cursor-pointer"

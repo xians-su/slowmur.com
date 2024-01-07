@@ -57,7 +57,36 @@ const SideTOC: React.FC<SideTOCProps> = ({
       .filter((item) => item.top <= 10)
       .sort((a, b) => b.top - a.top)[0]?.id;
   };
+//
+const enableCommentArea = BLOG.comment.provider !== '';
 
+const mapPageUrl = (id: string) => {
+  return 'https://www.notion.so/' + id.replace(/-/g, '');
+};
+
+type Props = {
+  blockMap: ExtendedRecordMap;
+  post: Post;
+  emailHash: string;
+  fullWidth?: boolean;
+  onlyContents?: boolean;
+  tweet?: typeof Tweet;
+  slug?: string | null;
+};
+
+export const Layout: React.VFC<Props> = ({
+  blockMap,
+  post,
+  emailHash,
+  tweet,
+  slug,
+  fullWidth = false,
+  onlyContents = false,
+}) => {
+  const locale = useLocale();
+  const router = useRouter();
+  const { theme } = useTheme();
+//
   useEffect(() => {
     if (pause) return;
 
@@ -130,35 +159,6 @@ const handleScrollDirection = () => {
 
 export default React.memo(SideTOC);
 //
-const enableCommentArea = BLOG.comment.provider !== '';
-
-const mapPageUrl = (id: string) => {
-  return 'https://www.notion.so/' + id.replace(/-/g, '');
-};
-
-type Props = {
-  blockMap: ExtendedRecordMap;
-  post: Post;
-  emailHash: string;
-  fullWidth?: boolean;
-  onlyContents?: boolean;
-  tweet?: typeof Tweet;
-  slug?: string | null;
-};
-
-export const Layout: React.VFC<Props> = ({
-  blockMap,
-  post,
-  emailHash,
-  tweet,
-  slug,
-  fullWidth = false,
-  onlyContents = false,
-}) => {
-  const locale = useLocale();
-  const router = useRouter();
-  const { theme } = useTheme();
-
   const renderContents = () => (
     <article>
       <h1 className="text-3xl font-bold text-black dark:text-white">{post.title}</h1>

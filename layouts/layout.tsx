@@ -34,7 +34,7 @@ interface SideTOCProps {
   visibleHeight?: number;
   pause: boolean;
 }
-
+const SideTOC = dynamic(() => import("@/components/SideTOC"), { ssr: false });
 const SideTOC: React.FC<SideTOCProps> = ({
   links: _links,
   posRef,
@@ -224,6 +224,13 @@ export const Layout: React.VFC<Props> = ({
           'mb-4': enableCommentArea,
         })}
       >
+        <SideTOC
+          links={links}
+          posRef={articleRef}
+          minLevel={minLevel}
+          pause={isBackingTop}
+          anchorName="notion-header-anchor"
+        />
         <button
           onClick={() => router.push(BLOG.path || '/')}
           className="mt-2 hover:text-black dark:hover:text-gray-100 cursor-pointer"

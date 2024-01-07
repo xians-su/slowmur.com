@@ -5,11 +5,8 @@ import { useEffect, useMemo, useState } from 'react';
 import BLOG from '~/blog.config';
 import { Footer, Header } from '~/components';
 import { getOGImageURL } from '~/lib/getOGImageURL';
-
 // import BlogPost from './BlogPost'
-
 type NextHeadSeoProps = Parameters<typeof NextHeadSeo>[0];
-
 type Props = {
   children: React.ReactNode;
   layout?: 'blog';
@@ -22,18 +19,14 @@ type Props = {
   createdTime?: string;
   isTagPage?: boolean;
 };
-
 const url = BLOG.path.length ? `${BLOG.link}/${BLOG.path}` : BLOG.link;
-
 export const Container: React.VFC<Props> = ({ children, fullWidth, ...meta }) => {
   const router = useRouter();
   const [customMetaTags, setCustomMetaTags] = useState<NextHeadSeoProps['customLinkTags']>([]);
   const [alreadySet, setAlreadySet] = useState<boolean>(false);
-
   const root = useMemo(() => {
     return router.pathname === (BLOG.path || '/');
   }, [router]);
-
   const siteUrl = useMemo(() => {
     // tag detail page
     if (meta?.isTagPage && meta?.slug) {
@@ -49,11 +42,9 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, ...meta }) =>
     }
     return url;
   }, [meta]);
-
   const siteTitle = useMemo(() => {
     return meta.title ?? BLOG.title;
   }, [meta]);
-
   useEffect(() => {
     if (alreadySet || meta.type !== 'article' || !meta) return;
     setCustomMetaTags((prevCustomMetaTags) =>
@@ -70,7 +61,6 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, ...meta }) =>
     );
     setAlreadySet(true);
   }, [alreadySet, meta]);
-
   return (
     <div>
       <NextHeadSeo
@@ -89,6 +79,17 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, ...meta }) =>
             root,
             twitter: false,
           }),
+
+    
+          
+            
+    
+
+          
+          Expand Down
+    
+    
+  
         }}
         customMetaTags={(customMetaTags ?? []).concat(
           {

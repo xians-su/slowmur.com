@@ -9,7 +9,17 @@ import dynamic from "next/dynamic";
 
 // import BlogPost from './BlogPost'
 
+//
 const SideTOC = dynamic(() => import("~/components/SideTOC"), { ssr: false });
+
+const Container = ({ children, layout, fullWidth, toc, ...customMeta }) => {
+  const url = BLOG.path.length ? `${BLOG.link}/${BLOG.path}` : BLOG.link;
+  const meta = {
+    title: BLOG.title,
+    type: "website",
+    ...customMeta,
+  };
+//
 
 type NextHeadSeoProps = Parameters<typeof NextHeadSeo>[0];
 
@@ -138,11 +148,14 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, ...meta }) =>
         >
           {children}
         </main>
+                    <div className="flex-1">
+              {toc?.links?.length > 0 && (
                         <SideTOC
                   links={toc.links}
                   minLevel={toc.minLevel}
                   anchorName="notion-header-anchor"
                 />
+                    </div>
         <Footer fullWidth={fullWidth} />
       </div>
     </div>

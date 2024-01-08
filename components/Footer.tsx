@@ -35,7 +35,7 @@ export const Footer: React.VFC<Props> = ({ fullWidth }) => {
 							</g>
 						</svg>Vercel
 					</a>
-//          <Vercel />
+          <Vercel />
         </div>
       </div>
     </div>

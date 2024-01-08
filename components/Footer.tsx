@@ -20,7 +20,8 @@ export const Footer: React.VFC<Props> = ({ fullWidth }) => {
         <div className="flex flex-wrap justify-between align-baseline">
           <p>
             © {BLOG.author} {from === y || !from ? y : `${from} - ${y}`}
-          </p><a href="https://vercel.com">
+          </p>{' '}
+                      <a href="https://vercel.com">
 						Powered by
 						<svg
 							width="21"
@@ -35,7 +36,7 @@ export const Footer: React.VFC<Props> = ({ fullWidth }) => {
 							</g>
 						</svg>Vercel
 					</a>
-          <Vercel />
+					{/* <Vercel /> */}
         </div>
       </div>
     </div>

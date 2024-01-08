@@ -118,6 +118,18 @@ nav {
   user-select: none;
 }
 
+/* magnet-bg */
+.magnet-bg {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  --magnet-color: rgba(130, 130, 130, 0.3);
+  --magnet-size: 1;
+  --magnet-gap: 40;
+  --magnet-radius: 200;
+  background: paint(magnet-matrix);
+}
+
 @media (min-width: 768px) {
   .sticky-nav-full {
     @apply max-w-full border-b border-opacity-50 border-gray-200 dark:border-gray-600 dark:border-opacity-50;

@@ -20,9 +20,24 @@ export const Footer: React.VFC<Props> = ({ fullWidth }) => {
         <div className="flex flex-wrap justify-between align-baseline">
           <p>
             © {BLOG.author} {from === y || !from ? y : `${from} - ${y}`}
-         </p>{' '}
+          </p>{' '}
+                      <a href="https://vercel.com">
+						Powered by
+						<svg
+							width="21"
+							height="27"
+							viewBox="4 2 21 27"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+							className="inline-block"
+						>
+							<g clipPath="url(#clip0)">
+								<path d="M14.8431 8.27271L20.7772 18.4545H8.90918L14.8431 8.27271Z" fill="black" />
+							</g>
+						</svg>Vercel
+					</a>
 					{/* <Vercel /> */}
-       </div>
+        </div>
       </div>
     </div>
   );

@@ -13,6 +13,7 @@ import { TagItem } from '~/components/Tag';
 import formatDate from '~/lib/formatDate';
 import { useLocale } from '~/lib/i18n/locale';
 import { Post } from '~/types';
+import { useEffect, useRef, useState } from "react";
 
 const enableCommentArea = BLOG.comment.provider !== '';
 
@@ -89,6 +90,24 @@ export const Layout: React.VFC<Props> = ({
       )}
     </article>
   );
+
+  const articleRef = useRef();
+  const [toc, setToc] = useState<{ links: { id: string | undefined; title: string; level: string; }[]; minLevel: number; } | undefined>(undefined);
+
+  useEffect(() => {
+    const links = document.querySelectorAll(".notion-h");
+    const linksArr: { id: string | undefined; title: string; level: string; }[] = Array.from(links).map(
+      (element) => ({
+        id: (element as HTMLElement).dataset.id,
+        title: element.textContent || "",
+        level: element.localName?.substring(1) || "",
+      })
+    );
+  
+    const level = [...linksArr].sort((a, b) => (parseInt(a.level) || 0) - (parseInt(b.level) || 0))[0]?.level ?? '2';
+    setToc({ links: linksArr, minLevel: parseInt(level) });
+  }, []);
+
   return onlyContents ? (
     renderContents()
   ) : (
@@ -100,6 +119,7 @@ export const Layout: React.VFC<Props> = ({
       type="article"
       fullWidth={fullWidth}
       slug={slug}
+      toc={toc}
     >
       {renderContents()}
       <div

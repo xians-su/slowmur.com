@@ -5,7 +5,8 @@ import { useEffect, useMemo, useState } from 'react';
 import BLOG from '~/blog.config';
 import { Footer, Header } from '~/components';
 import { getOGImageURL } from '~/lib/getOGImageURL';
-// import BlogPost from './BlogPost'
+import SideTOC from '~/components/SideTOC';  // 導入 SideTOC
+import PropTypes from "prop-types";
 type NextHeadSeoProps = Parameters<typeof NextHeadSeo>[0];
 type Props = {
   children: React.ReactNode;
@@ -18,9 +19,13 @@ type Props = {
   slug?: string | null;
   createdTime?: string;
   isTagPage?: boolean;
+  toc?: {  // 添加 toc 屬性
+    links: Array<any>;
+    minLevel: number;
+  };
 };
 const url = BLOG.path.length ? `${BLOG.link}/${BLOG.path}` : BLOG.link;
-export const Container: React.VFC<Props> = ({ children, fullWidth, ...meta }) => {
+export const Container: React.VFC<Props> = ({ children, fullWidth, toc = { links: [], minLevel: 0 }, ...meta }) => {
   const router = useRouter();
   const [customMetaTags, setCustomMetaTags] = useState<NextHeadSeoProps['customLinkTags']>([]);
   const [alreadySet, setAlreadySet] = useState<boolean>(false);
@@ -71,7 +76,6 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, ...meta }) =>
         og={{
           title: meta.title,
           url: siteUrl,
-          // locale: BLog.lang,
           type: meta.type ?? 'website',
           description: meta.description,
           image: getOGImageURL({
@@ -125,8 +129,20 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, ...meta }) =>
         >
           {children}
         </main>
+        <div className="flex-1">
+          {toc?.links?.length > 0 && (
+            <SideTOC
+              links={toc.links}
+              minLevel={toc.minLevel}
+              anchorName="notion-header-anchor"
+            />
+          )}
+        </div>
         <Footer fullWidth={fullWidth} />
       </div>
     </div>
   );
+};
+Container.propTypes = {
+  children: PropTypes.node,
 };

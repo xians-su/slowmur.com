@@ -121,6 +121,8 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, toc = { links
         })}
       >
         <Header navBarTitle={siteTitle} fullWidth={fullWidth} />
+        <div className="flex flex-1">
+          <div className="flex-1"></div>
         <main
           className={classNames('m-auto flex-grow w-full transition-all', {
             'px-4 md:px-24': fullWidth,
@@ -137,6 +139,7 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, toc = { links
               anchorName="notion-header-anchor"
             />
           )}
+        </div>
         </div>
         <Footer fullWidth={fullWidth} />
       </div>

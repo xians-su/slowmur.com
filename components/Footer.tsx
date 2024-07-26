@@ -19,7 +19,7 @@ export const Footer: React.VFC<Props> = ({ fullWidth }) => {
       <div className="my-4 text-sm leading-6">
         <div className="flex flex-wrap justify-between align-baseline">
           <p>
-            © {BLOG.author} {from === y || !from ? y : `${from} - ${y}`}
+            © {BLOG.author}
           </p>{' '}
                       <a href="https://vercel.com">
 						Powered by

@@ -7,7 +7,7 @@ const BLOG = {
   email: 'hi@xians.su',
   link: 'https://slowmur.com',
   externalHPLink: 'https://xians.su',
-  description: '不時嘮叨，盡量言之有物。',
+  description: '有些事用說的略顯嘮叨，放著沉澱。',
   lang: 'en-US', // ['en-US', 'zh-CN', 'zh-HK', 'zh-TW', 'ja-JP', 'es-ES']
   appearance: 'dark', // ['light', 'dark'],
   font: 'sans-serif', // ['sans-serif', 'serif']
@@ -24,7 +24,7 @@ const BLOG = {
   // detail: https://github.com/yokinist/og-image/blob/main/api/_lib/types.ts#L2-L12
   socialLink: 'https://xians.su',
   seo: {
-    keywords: ['xians', 'Xians Su', 'slowmur', '慢叨', '不斷分心雜學者'],
+    keywords: ['xians', 'Xians Su', 'slowmur', '慢叨'],
     googleSiteVerification: '_1A8LqqSKVpDRvIVBJIzizKL9y5T7poSIDkc8TbS5m0', // Remove the value or replace it with your own google site verification code
   },
   notionPageId: process.env.NOTION_PAGE_ID, // DO NOT CHANGE THIS！！！

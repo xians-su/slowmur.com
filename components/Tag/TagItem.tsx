@@ -7,12 +7,16 @@ type Props = {
 
 export const TagItem: React.FC<Props> = ({ tag }) => {
   const tagData = getTagData(tag);
+  // DEBUG: show raw tag value in brackets
+  const debugInfo = `[${tag}]`;
   return (
     <Link href={`/tag/${encodeURIComponent(tag)}`}>
       <a>
         <div className="mr-1 flex items-center rounded-full border px-2 py-1 text-sm leading-none dark:border-gray-600">
           {tagData?.emoji && <span className="mr-1">{tagData.emoji}</span>}
-          <p>{tagData?.name ?? tag}</p>
+          <p>
+            {tagData?.name ?? tag} {debugInfo}
+          </p>
         </div>
       </a>
     </Link>

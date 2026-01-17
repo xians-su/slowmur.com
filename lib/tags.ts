@@ -68,27 +68,6 @@ const TAG_DATA: Record<TagSlug, TagData> = {
   },
 } as const;
 
+export const isTagSlug = (slug: string): slug is TagSlug => (Object.values(TAG_SLUGS) as string[]).includes(slug);
+
 export const getTagDataBySlug = (slug: TagSlug): TagData => TAG_DATA[slug];
-
-/* eslint-disable no-console */
-// Find tag data by slug or name (case-insensitive)
-export const getTagData = (tag: string): TagData | undefined => {
-  const key = tag.trim().toLowerCase();
-  // Debug log - remove after testing
-  console.log('[getTagData] input:', tag, '-> key:', key);
-
-  // Direct search through TAG_DATA values
-  const allData = Object.values(TAG_DATA);
-  console.log('[getTagData] TAG_DATA values count:', allData.length);
-
-  for (const data of allData) {
-    if (data.slug.toLowerCase() === key || data.name.toLowerCase() === key) {
-      console.log('[getTagData] FOUND:', data);
-      return data;
-    }
-  }
-
-  console.log('[getTagData] NOT FOUND for key:', key);
-  return undefined;
-};
-/* eslint-enable no-console */

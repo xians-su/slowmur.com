@@ -1,7 +1,8 @@
 import classNames from 'classnames';
+import { Twemoji } from 'components/Twemoji';
 import Link from 'next/link';
 import { useMemo } from 'react';
-import { getTagData } from '~/lib/tags';
+import { getTagDataBySlug, isTagSlug } from '~/lib/tags';
 
 type Props =
   | {
@@ -16,29 +17,18 @@ type Props =
     };
 
 export const TagTabItem: React.FC<Props> = ({ tagKey, selected, ...rest }) => {
+  const tagSlug = isTagSlug(tagKey) ? tagKey : undefined;
+
   const linkUrl = useMemo(() => {
-    if (selected || !('count' in rest)) {
+    if (selected || !('count' in rest) || !tagSlug) {
       return '/';
-    } else {
-      return `/tag/${encodeURIComponent(tagKey)}`;
     }
-  }, [rest, selected, tagKey]);
+    return `/tag/${encodeURIComponent(tagSlug)}`;
+  }, [rest, selected, tagSlug]);
 
-  const tagData = getTagData(tagKey);
-  // DEBUG: Show emoji directly based on tagKey for testing
-  const debugEmoji: Record<string, string> = {
-    all: '🌴',
-    reading: '📚',
-    fantasybasketball: '🏀',
-    'low-code': '👾',
-    productivity: '🛠️',
-    playlist: '🎵',
-    thinking: '💭',
-    link: '🔗',
-    murmur: '💫',
-  };
-  const emoji = tagData?.emoji || debugEmoji[tagKey.toLowerCase()];
+  if (!tagSlug) return null;
 
+  const tagData = getTagDataBySlug(tagSlug);
   return (
     <li
       className={classNames('mr-3 font-bold whitespace-nowrap rounded-lg min-w-max block', {
@@ -49,8 +39,14 @@ export const TagTabItem: React.FC<Props> = ({ tagKey, selected, ...rest }) => {
     >
       <Link href={linkUrl} scroll={false}>
         <a className="flex items-center px-4 py-2">
-          {emoji && <span className="mr-1">{emoji}</span>}
-          <span>{'count' in rest ? `${tagData?.name ?? tagKey} (${rest.count})` : `${tagData?.name ?? tagKey}`}</span>
+          {tagData?.emoji && <Twemoji emoji={tagData.emoji} size={20} />}
+          <span
+            className={classNames({
+              'ml-2': !!tagData?.emoji,
+            })}
+          >
+            {'count' in rest ? `${tagData?.name ?? tagKey} (${rest.count})` : `${tagData?.name ?? tagKey}`}
+          </span>
         </a>
       </Link>
     </li>

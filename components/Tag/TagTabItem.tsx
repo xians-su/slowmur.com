@@ -1,8 +1,7 @@
 import classNames from 'classnames';
-import { Twemoji } from 'components/Twemoji';
 import Link from 'next/link';
 import { useMemo } from 'react';
-import { getTagDataBySlug, TagSlug } from '~/lib/tags';
+import { getTagData } from '~/lib/tags';
 
 type Props =
   | {
@@ -17,8 +16,6 @@ type Props =
     };
 
 export const TagTabItem: React.FC<Props> = ({ tagKey, selected, ...rest }) => {
-  const castKey = tagKey as TagSlug;
-
   const linkUrl = useMemo(() => {
     if (selected || !('count' in rest)) {
       return '/';
@@ -27,7 +24,7 @@ export const TagTabItem: React.FC<Props> = ({ tagKey, selected, ...rest }) => {
     }
   }, [rest, selected, tagKey]);
 
-  const tagData = getTagDataBySlug(castKey);
+  const tagData = getTagData(tagKey);
   return (
     <li
       className={classNames('mr-3 font-bold whitespace-nowrap rounded-lg min-w-max block', {
@@ -38,14 +35,8 @@ export const TagTabItem: React.FC<Props> = ({ tagKey, selected, ...rest }) => {
     >
       <Link href={linkUrl} scroll={false}>
         <a className="flex items-center px-4 py-2">
-          {tagData?.emoji && <Twemoji emoji={tagData.emoji} size={20} />}
-          <span
-            className={classNames({
-              'ml-2': !!tagData?.emoji,
-            })}
-          >
-            {'count' in rest ? `${tagData?.name ?? tagKey} (${rest.count})` : `${tagData?.name ?? tagKey}`}
-          </span>
+          {tagData?.emoji && <span className="mr-1">{tagData.emoji}</span>}
+          <span>{'count' in rest ? `${tagData?.name ?? tagKey} (${rest.count})` : `${tagData?.name ?? tagKey}`}</span>
         </a>
       </Link>
     </li>

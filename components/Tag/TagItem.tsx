@@ -1,15 +1,14 @@
 import classNames from 'classnames';
 import { Twemoji } from 'components/Twemoji';
 import Link from 'next/link';
-import { getTagDataBySlug, TagSlug } from '~/lib/tags';
+import { getTagData } from '~/lib/tags';
 
 type Props = {
   tag: string;
 };
 
 export const TagItem: React.FC<Props> = ({ tag }) => {
-  const castKey = tag as TagSlug;
-  const tagData = getTagDataBySlug(castKey);
+  const tagData = getTagData(tag);
   return (
     <Link href={`/tag/${encodeURIComponent(tag)}`}>
       <a>

@@ -69,3 +69,15 @@ const TAG_DATA: Record<TagSlug, TagData> = {
 } as const;
 
 export const getTagDataBySlug = (slug: TagSlug): TagData => TAG_DATA[slug];
+
+// Find tag data by slug or name (case-insensitive)
+export const getTagData = (tag: string): TagData | undefined => {
+  // First try exact slug match
+  if (TAG_DATA[tag as TagSlug]) {
+    return TAG_DATA[tag as TagSlug];
+  }
+  // Then try matching by name (case-insensitive)
+  return Object.values(TAG_DATA).find(
+    (data) => data.name.toLowerCase() === tag.toLowerCase() || data.slug.toLowerCase() === tag.toLowerCase(),
+  );
+};

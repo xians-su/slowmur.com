@@ -70,8 +70,6 @@ export const BlogPost: React.FC<Props> = ({ post }) => {
       {renderBlogPost({ isOuterLink: true })}
     </a>
   ) : (
-    <Link href={`${BLOG.path}/${post.slug}`}>
-      <a>{renderBlogPost({ isOuterLink: false })}</a>
-    </Link>
+    <Link href={`${BLOG.path}/${post.slug}`}>{renderBlogPost({ isOuterLink: false })}</Link>
   );
 };

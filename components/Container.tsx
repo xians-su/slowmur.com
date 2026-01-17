@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import Head from 'next/head';
 import NextHeadSeo from 'next-head-seo';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
@@ -66,6 +67,44 @@ export const Container: React.FC<Props> = ({ children, fullWidth, toc = { links:
     );
     setAlreadySet(true);
   }, [alreadySet, meta]);
+
+  const jsonLd = useMemo(() => {
+    if (meta.type === 'article') {
+      return {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: meta.title,
+        description: meta.description,
+        image: getOGImageURL({ title: siteTitle, root: false, twitter: false }),
+        datePublished: meta.date || meta.createdTime,
+        author: {
+          '@type': 'Person',
+          name: BLOG.author,
+          url: BLOG.link,
+        },
+        publisher: {
+          '@type': 'Person',
+          name: BLOG.author,
+          url: BLOG.link,
+        },
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': siteUrl,
+        },
+      };
+    }
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: BLOG.title,
+      description: BLOG.description,
+      url: BLOG.link,
+      author: {
+        '@type': 'Person',
+        name: BLOG.author,
+      },
+    };
+  }, [meta, siteTitle, siteUrl]);
   return (
     <div>
       <NextHeadSeo
@@ -114,6 +153,9 @@ export const Container: React.FC<Props> = ({ children, fullWidth, toc = { links:
           site: '@XiansSu',
         }}
       />
+      <Head>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      </Head>
       <div
         className={classNames('wrapper', {
           'font-serif': BLOG.font === 'serif',

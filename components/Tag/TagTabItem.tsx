@@ -37,17 +37,15 @@ export const TagTabItem: React.FC<Props> = ({ tagKey, selected, ...rest }) => {
         'bg-gray-200 text-gray-700 dark:text-night': selected,
       })}
     >
-      <Link href={linkUrl} scroll={false}>
-        <a className="flex items-center px-4 py-2">
-          {tagData?.emoji && <Twemoji emoji={tagData.emoji} size={20} />}
-          <span
-            className={classNames({
-              'ml-2': !!tagData?.emoji,
-            })}
-          >
-            {'count' in rest ? `${tagData?.name ?? tagKey} (${rest.count})` : `${tagData?.name ?? tagKey}`}
-          </span>
-        </a>
+      <Link href={linkUrl} scroll={false} className="flex items-center px-4 py-2">
+        {tagData?.emoji && <Twemoji emoji={tagData.emoji} size={20} />}
+        <span
+          className={classNames({
+            'ml-2': !!tagData?.emoji,
+          })}
+        >
+          {'count' in rest ? `${tagData?.name ?? tagKey} (${rest.count})` : `${tagData?.name ?? tagKey}`}
+        </span>
       </Link>
     </li>
   );

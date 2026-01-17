@@ -37,9 +37,7 @@ const NavBar: React.FC = () => {
                   'border-b-2 border-blue-700 dark:border-blue-400': link.to === activeNav,
                 })}
               >
-                <Link href={link.to}>
-                  <a>{link.name}</a>
-                </Link>
+                <Link href={link.to}>{link.name}</Link>
               </li>
             ),
         )}
@@ -103,12 +101,10 @@ export const Header: React.FC<HeaderProps> = ({ navBarTitle, fullWidth }) => {
         ref={navRef}
       >
         <div className="flex items-center">
-          <Link href="/">
-            <a aria-label={BLOG.title}>
-              <div className="min-w-max">
-                <Twemoji emoji={'💬'} size={28} />
-              </div>
-            </a>
+          <Link href="/" aria-label={BLOG.title}>
+            <div className="min-w-max">
+              <Twemoji emoji={'💬'} size={28} />
+            </div>
           </Link>
           {navBarTitle ? (
             <p className="header-name ml-2 font-medium text-day dark:text-night">{navBarTitle}</p>

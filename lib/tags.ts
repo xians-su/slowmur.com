@@ -70,15 +70,25 @@ const TAG_DATA: Record<TagSlug, TagData> = {
 
 export const getTagDataBySlug = (slug: TagSlug): TagData => TAG_DATA[slug];
 
-// Create a lookup map for case-insensitive matching by slug or name
-const TAG_LOOKUP_MAP: Record<string, TagData> = {};
-Object.values(TAG_DATA).forEach((data) => {
-  TAG_LOOKUP_MAP[data.slug.toLowerCase()] = data;
-  TAG_LOOKUP_MAP[data.name.toLowerCase()] = data;
-});
-
+/* eslint-disable no-console */
 // Find tag data by slug or name (case-insensitive)
 export const getTagData = (tag: string): TagData | undefined => {
   const key = tag.trim().toLowerCase();
-  return TAG_LOOKUP_MAP[key];
+  // Debug log - remove after testing
+  console.log('[getTagData] input:', tag, '-> key:', key);
+
+  // Direct search through TAG_DATA values
+  const allData = Object.values(TAG_DATA);
+  console.log('[getTagData] TAG_DATA values count:', allData.length);
+
+  for (const data of allData) {
+    if (data.slug.toLowerCase() === key || data.name.toLowerCase() === key) {
+      console.log('[getTagData] FOUND:', data);
+      return data;
+    }
+  }
+
+  console.log('[getTagData] NOT FOUND for key:', key);
+  return undefined;
 };
+/* eslint-enable no-console */

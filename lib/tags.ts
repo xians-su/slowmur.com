@@ -3,9 +3,9 @@ import { ValueOf } from 'lib/types';
 const TAG_SLUGS = {
   All: 'all',
   Murmur: 'murmur',
-  ThinkingFragments: 'thinking-fragments',
+  Thinking: 'thinking',
   Link: 'link',
-  LowCodeHacker: 'lowcode-hacker',
+  LowCode: 'low-code',
   Productivity: 'productivity',
   Playlist: 'playlist',
   Reading: 'reading',
@@ -21,10 +21,10 @@ type TagData = {
 };
 
 const TAG_DATA: Record<TagSlug, TagData> = {
-  [TAG_SLUGS.LowCodeHacker]: {
-    name: 'LowCodeHacker',
+  [TAG_SLUGS.LowCode]: {
+    name: 'Low-Code',
     emoji: '👾',
-    slug: TAG_SLUGS.LowCodeHacker,
+    slug: TAG_SLUGS.LowCode,
   },
   [TAG_SLUGS.Productivity]: {
     name: 'Productivity',
@@ -36,10 +36,10 @@ const TAG_DATA: Record<TagSlug, TagData> = {
     emoji: '🎵',
     slug: TAG_SLUGS.Playlist,
   },
-  [TAG_SLUGS.ThinkingFragments]: {
-    name: '思考碎片',
+  [TAG_SLUGS.Thinking]: {
+    name: 'Thinking',
     emoji: '💭',
-    slug: TAG_SLUGS.ThinkingFragments,
+    slug: TAG_SLUGS.Thinking,
   },
   [TAG_SLUGS.Link]: {
     name: 'Link',
@@ -62,22 +62,24 @@ const TAG_DATA: Record<TagSlug, TagData> = {
     slug: TAG_SLUGS.Murmur,
   },
   [TAG_SLUGS.All]: {
-    name: '🌴All',
-    emoji: '',
+    name: 'All',
+    emoji: '🌴',
     slug: TAG_SLUGS.All,
   },
 } as const;
 
 export const getTagDataBySlug = (slug: TagSlug): TagData => TAG_DATA[slug];
 
-// Find tag data by slug or name (case-insensitive)
+// Find tag data by slug or name (case-insensitive, with whitespace trimming)
 export const getTagData = (tag: string): TagData | undefined => {
+  const trimmedTag = tag.trim();
   // First try exact slug match
-  if (TAG_DATA[tag as TagSlug]) {
-    return TAG_DATA[tag as TagSlug];
+  if (TAG_DATA[trimmedTag as TagSlug]) {
+    return TAG_DATA[trimmedTag as TagSlug];
   }
-  // Then try matching by name (case-insensitive)
+  // Then try matching by name or slug (case-insensitive)
   return Object.values(TAG_DATA).find(
-    (data) => data.name.toLowerCase() === tag.toLowerCase() || data.slug.toLowerCase() === tag.toLowerCase(),
+    (data) =>
+      data.name.toLowerCase() === trimmedTag.toLowerCase() || data.slug.toLowerCase() === trimmedTag.toLowerCase(),
   );
 };

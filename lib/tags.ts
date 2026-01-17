@@ -70,16 +70,15 @@ const TAG_DATA: Record<TagSlug, TagData> = {
 
 export const getTagDataBySlug = (slug: TagSlug): TagData => TAG_DATA[slug];
 
-// Find tag data by slug or name (case-insensitive, with whitespace trimming)
+// Create a lookup map for case-insensitive matching by slug or name
+const TAG_LOOKUP_MAP: Record<string, TagData> = {};
+Object.values(TAG_DATA).forEach((data) => {
+  TAG_LOOKUP_MAP[data.slug.toLowerCase()] = data;
+  TAG_LOOKUP_MAP[data.name.toLowerCase()] = data;
+});
+
+// Find tag data by slug or name (case-insensitive)
 export const getTagData = (tag: string): TagData | undefined => {
-  const trimmedTag = tag.trim();
-  // First try exact slug match
-  if (TAG_DATA[trimmedTag as TagSlug]) {
-    return TAG_DATA[trimmedTag as TagSlug];
-  }
-  // Then try matching by name or slug (case-insensitive)
-  return Object.values(TAG_DATA).find(
-    (data) =>
-      data.name.toLowerCase() === trimmedTag.toLowerCase() || data.slug.toLowerCase() === trimmedTag.toLowerCase(),
-  );
+  const key = tag.trim().toLowerCase();
+  return TAG_LOOKUP_MAP[key];
 };

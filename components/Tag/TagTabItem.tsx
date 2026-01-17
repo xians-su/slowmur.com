@@ -25,6 +25,20 @@ export const TagTabItem: React.FC<Props> = ({ tagKey, selected, ...rest }) => {
   }, [rest, selected, tagKey]);
 
   const tagData = getTagData(tagKey);
+  // DEBUG: Show emoji directly based on tagKey for testing
+  const debugEmoji: Record<string, string> = {
+    all: '🌴',
+    reading: '📚',
+    fantasybasketball: '🏀',
+    'low-code': '👾',
+    productivity: '🛠️',
+    playlist: '🎵',
+    thinking: '💭',
+    link: '🔗',
+    murmur: '💫',
+  };
+  const emoji = tagData?.emoji || debugEmoji[tagKey.toLowerCase()];
+
   return (
     <li
       className={classNames('mr-3 font-bold whitespace-nowrap rounded-lg min-w-max block', {
@@ -35,7 +49,7 @@ export const TagTabItem: React.FC<Props> = ({ tagKey, selected, ...rest }) => {
     >
       <Link href={linkUrl} scroll={false}>
         <a className="flex items-center px-4 py-2">
-          {tagData?.emoji && <span className="mr-1">{tagData.emoji}</span>}
+          {emoji && <span className="mr-1">{emoji}</span>}
           <span>{'count' in rest ? `${tagData?.name ?? tagKey} (${rest.count})` : `${tagData?.name ?? tagKey}`}</span>
         </a>
       </Link>

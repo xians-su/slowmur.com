@@ -3,7 +3,7 @@ import BLOG from '~/blog.config';
 
 type Props = { fullWidth?: boolean };
 
-export const Footer: React.VFC<Props> = ({ fullWidth }) => {
+export const Footer: React.FC<Props> = ({ fullWidth }) => {
   const d = new Date();
   const y = d.getFullYear();
   const from = +BLOG.since;

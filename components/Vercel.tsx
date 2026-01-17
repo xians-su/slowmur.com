@@ -1,11 +1,6 @@
-const Vercel: React.VFC = () => {
+const Vercel: React.FC = () => {
   return (
-    <a
-      href="https://vercel.com"
-      target="_blank"
-      rel="noreferrer noopener"
-      aria-label="vercel"
-    >
+    <a href="https://vercel.com" target="_blank" rel="noreferrer noopener" aria-label="vercel">
       <svg
         width="135"
         height="28"

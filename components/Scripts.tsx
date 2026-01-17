@@ -2,7 +2,7 @@ import Script from 'next/script';
 import BLOG from '~/blog.config';
 import CJK from '~/lib/cjk';
 
-export const Scripts: React.VFC = () => (
+export const Scripts: React.FC = () => (
   <>
     {BLOG.analytics && BLOG.analytics.provider === 'ackee' && (
       <Script
@@ -14,7 +14,6 @@ export const Scripts: React.VFC = () => (
     {BLOG.analytics && BLOG.analytics.provider === 'ga' && (
       <>
         <Script src={`https://www.googletagmanager.com/gtag/js?id=${BLOG.analytics.gaConfig.measurementId}`} />
-
       </>
     )}
     <noscript>

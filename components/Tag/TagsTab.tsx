@@ -6,11 +6,11 @@ type Props = {
   currentTag?: string;
 };
 
-export const Tags: React.VFC<Props> = ({ tags, currentTag }: Props) => {
+export const Tags: React.FC<Props> = ({ tags, currentTag }: Props) => {
   if (!tags) return null;
   return (
-    <div className="flex items-center tag-container">
-      <ul className="flex overflow-x-auto py-2 max-w-full">
+    <div className="tag-container flex items-center">
+      <ul className="flex max-w-full overflow-x-auto py-2">
         <TagTabItem tagKey="all" selected={!currentTag} root />
         {Object.keys(tags).map((key) => {
           return <TagTabItem key={key} tagKey={key} selected={key === currentTag} count={tags[key]} />;

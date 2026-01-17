@@ -16,7 +16,7 @@ type Props =
       root: boolean;
     };
 
-export const TagTabItem: React.VFC<Props> = ({ tagKey, selected, ...rest }) => {
+export const TagTabItem: React.FC<Props> = ({ tagKey, selected, ...rest }) => {
   const castKey = tagKey as TagSlug;
 
   const linkUrl = useMemo(() => {
@@ -37,7 +37,7 @@ export const TagTabItem: React.VFC<Props> = ({ tagKey, selected, ...rest }) => {
       })}
     >
       <Link href={linkUrl} scroll={false}>
-        <a className="flex items-center py-2 px-4">
+        <a className="flex items-center px-4 py-2">
           {tagData?.emoji && <Twemoji emoji={tagData.emoji} size={20} />}
           <span
             className={classNames({

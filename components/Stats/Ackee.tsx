@@ -7,7 +7,7 @@ type Props = {
   ackeeDomainId: string;
 };
 
-const Ackee: React.VFC<Props> = ({ ackeeServerUrl, ackeeDomainId }) => {
+const Ackee: React.FC<Props> = ({ ackeeServerUrl, ackeeDomainId }) => {
   const router = useRouter();
   useAckee(
     router.asPath,

@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { SearchIcon } from '@heroicons/react/outline';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { BlogPost } from '~/components';
 import { Tags } from '~/components/Tag';
 import { useLocale } from '~/lib/i18n/locale';
@@ -12,7 +12,7 @@ type Props = {
   currentTag?: string;
 };
 
-export const SearchLayout: React.VFC<Props> = ({ tags, posts, currentTag }) => {
+export const SearchLayout: React.FC<Props> = ({ tags, posts, currentTag }) => {
   const [searchValue, setSearchValue] = useState('');
   const locale = useLocale();
 
@@ -40,15 +40,15 @@ export const SearchLayout: React.VFC<Props> = ({ tags, posts, currentTag }) => {
         <input
           type="text"
           placeholder={currentTag ? `${locale.POST.SEARCHIN} #${currentTag}` : locale.POST.SEARCH}
-          className="block py-2 px-4 w-full text-black dark:text-white bg-gray-50 dark:bg-gray-700 rounded-lg border-2 border-gray-300"
+          className="block w-full rounded-lg border-2 border-gray-300 bg-gray-50 px-4 py-2 text-black dark:bg-gray-700 dark:text-white"
           onChange={(e) => setSearchValue(e.target.value)}
         />
-        <SearchIcon className="absolute top-3 right-3 w-5 h-5 text-gray-500 dark:text-gray-400" />
+        <MagnifyingGlassIcon className="absolute right-3 top-3 size-5 text-gray-500 dark:text-gray-400" />
       </div>
       <div className="sticky top-16 z-10 bg-day dark:bg-night">
         <Tags tags={tags} currentTag={currentTag} />
       </div>
-      <div className="my-5 article-container">
+      <div className="article-container my-5">
         {!filteredBlogPosts.length && <p className="text-gray-500 dark:text-gray-300">{locale.POST.NOTFOUND}</p>}
         {filteredBlogPosts.map((post) => (
           <BlogPost key={post.id} post={post} />

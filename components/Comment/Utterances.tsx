@@ -6,7 +6,7 @@ type Props = {
   layout?: 'fullWidth';
 };
 
-const Utterances: React.VFC<Props> = ({ issueTerm, layout }) => {
+const Utterances: React.FC<Props> = ({ issueTerm, layout }) => {
   useEffect(() => {
     const theme = BLOG.appearance === 'light' ? 'github-light' : 'github-dark';
     const script = document.createElement('script');

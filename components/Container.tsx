@@ -5,8 +5,7 @@ import { useEffect, useMemo, useState } from 'react';
 import BLOG from '~/blog.config';
 import { Footer, Header } from '~/components';
 import { getOGImageURL } from '~/lib/getOGImageURL';
-import SideTOC from '~/components/SideTOC';  // 導入 SideTOC
-import PropTypes from "prop-types";
+import SideTOC from '~/components/SideTOC';
 type NextHeadSeoProps = Parameters<typeof NextHeadSeo>[0];
 type Props = {
   children: React.ReactNode;
@@ -19,13 +18,14 @@ type Props = {
   slug?: string | null;
   createdTime?: string;
   isTagPage?: boolean;
-  toc?: {  // 添加 toc 屬性
+  toc?: {
+    // 添加 toc 屬性
     links: Array<any>;
     minLevel: number;
   };
 };
 const url = BLOG.path.length ? `${BLOG.link}/${BLOG.path}` : BLOG.link;
-export const Container: React.VFC<Props> = ({ children, fullWidth, toc = { links: [], minLevel: 0 }, ...meta }) => {
+export const Container: React.FC<Props> = ({ children, fullWidth, toc = { links: [], minLevel: 0 }, ...meta }) => {
   const router = useRouter();
   const [customMetaTags, setCustomMetaTags] = useState<NextHeadSeoProps['customLinkTags']>([]);
   const [alreadySet, setAlreadySet] = useState<boolean>(false);
@@ -123,29 +123,22 @@ export const Container: React.VFC<Props> = ({ children, fullWidth, toc = { links
         <Header navBarTitle={siteTitle} fullWidth={fullWidth} />
         <div className="flex flex-1">
           <div className="flex-1"></div>
-        <main
-          className={classNames('m-auto flex-grow w-full transition-all', {
-            'px-4 md:px-24': fullWidth,
-            'max-w-2xl px-4': !fullWidth,
-          })}
-        >
-          {children}
-        </main>
-        <div className="flex-1">
-          {toc?.links?.length > 0 && (
-            <SideTOC
-              links={toc.links}
-              minLevel={toc.minLevel}
-              anchorName="notion-header-anchor"
-            />
-          )}
-        </div>
+          <main
+            className={classNames('m-auto flex-grow w-full transition-all', {
+              'px-4 md:px-24': fullWidth,
+              'max-w-2xl px-4': !fullWidth,
+            })}
+          >
+            {children}
+          </main>
+          <div className="flex-1">
+            {toc?.links?.length > 0 && (
+              <SideTOC links={toc.links} minLevel={toc.minLevel} anchorName="notion-header-anchor" />
+            )}
+          </div>
         </div>
         <Footer fullWidth={fullWidth} />
       </div>
     </div>
   );
-};
-Container.propTypes = {
-  children: PropTypes.node,
 };

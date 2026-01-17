@@ -3,8 +3,8 @@ import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
-import { SunIcon } from '@heroicons/react/solid';
-import { MoonIcon } from '@heroicons/react/solid';
+import { SunIcon } from '@heroicons/react/24/solid';
+import { MoonIcon } from '@heroicons/react/24/solid';
 import BLOG from '~/blog.config';
 import { fetchLocaleLang } from '~/lib/i18n/lang';
 import { Twemoji } from './Twemoji';
@@ -16,7 +16,7 @@ const links = [
   { id: 3, name: locale.NAV.RSS, to: '/feed', show: true },
 ];
 
-const NavBar: React.VFC = () => {
+const NavBar: React.FC = () => {
   const router = useRouter();
   const { theme, setTheme } = useTheme();
   const activeNav = useMemo(() => {
@@ -26,7 +26,7 @@ const NavBar: React.VFC = () => {
   }, [router]);
 
   return (
-    <div className="flex-shrink-0">
+    <div className="shrink-0">
       <ul className="flex flex-row items-center">
         {links.map(
           (link) =>
@@ -45,14 +45,14 @@ const NavBar: React.VFC = () => {
         )}
         <li className="ml-4">
           <button
-            className="group block p-1 bg-night hover:bg-day dark:bg-day dark:hover:bg-night rounded-full transition-all duration-300"
+            className="group block rounded-full bg-night p-1 transition-all duration-300 hover:bg-day dark:bg-day dark:hover:bg-night"
             onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
             aria-label="toggle Dark Mode"
           >
             {theme === 'light' ? (
-              <MoonIcon className="w-5 h-5 text-day group-hover:text-night" />
+              <MoonIcon className="size-5 text-day group-hover:text-night" />
             ) : (
-              <SunIcon className="w-5 h-5 text-night group-hover:text-day" />
+              <SunIcon className="size-5 text-night group-hover:text-day" />
             )}
           </button>
         </li>
@@ -66,7 +66,7 @@ type HeaderProps = {
   fullWidth?: boolean;
 };
 
-export const Header: React.VFC<HeaderProps> = ({ navBarTitle, fullWidth }) => {
+export const Header: React.FC<HeaderProps> = ({ navBarTitle, fullWidth }) => {
   const navRef = useRef<HTMLDivElement>(null);
   const sentinalRef = useRef<HTMLDivElement>(null);
   const handler = useCallback(([entry]: IntersectionObserverEntry[]) => {
@@ -111,9 +111,9 @@ export const Header: React.VFC<HeaderProps> = ({ navBarTitle, fullWidth }) => {
             </a>
           </Link>
           {navBarTitle ? (
-            <p className="ml-2 font-medium text-day dark:text-night header-name">{navBarTitle}</p>
+            <p className="header-name ml-2 font-medium text-day dark:text-night">{navBarTitle}</p>
           ) : (
-            <p className="ml-2 font-medium text-day dark:text-night header-name">
+            <p className="header-name ml-2 font-medium text-day dark:text-night">
               {BLOG.title} -<span className="font-normal">{BLOG.description}</span>
             </p>
           )}

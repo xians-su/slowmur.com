@@ -8,6 +8,6 @@ type Props = {
   options: Gitalk.GitalkOptions;
 };
 
-const CustomGitalk: React.VFC<Props> = (props) => <GitalkComponent {...props} />;
+const CustomGitalk: React.FC<Props> = (props) => <GitalkComponent {...props} />;
 
 export default CustomGitalk;

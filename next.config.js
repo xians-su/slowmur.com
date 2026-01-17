@@ -10,6 +10,7 @@ const nextConfig = {
       { protocol: 'https', hostname: 'gravatar.com' },
       { protocol: 'https', hostname: 'pbs.twimg.com' },
       { protocol: 'https', hostname: 'twemoji.maxcdn.com' },
+      { protocol: 'https', hostname: 'cdn.jsdelivr.net' },
       { protocol: 'https', hostname: '**.notion.so' },
       { protocol: 'https', hostname: '**.amazonaws.com' },
     ],

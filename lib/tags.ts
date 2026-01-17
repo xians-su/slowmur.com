@@ -10,6 +10,11 @@ const TAG_SLUGS = {
   Playlist: 'playlist',
   Reading: 'reading',
   FantasyBasketball: 'fantasy-basketball',
+  // 新增標籤
+  Music: 'music',
+  Diary: 'diary',
+  Chat: 'chat',
+  BookReview: 'book-review',
 } as const;
 
 export type TagSlug = ValueOf<typeof TAG_SLUGS>;
@@ -65,6 +70,27 @@ const TAG_DATA: Record<TagSlug, TagData> = {
     name: '🌴All',
     emoji: '',
     slug: TAG_SLUGS.All,
+  },
+  // 新增標籤
+  [TAG_SLUGS.Music]: {
+    name: '音樂',
+    emoji: '🎵',
+    slug: TAG_SLUGS.Music,
+  },
+  [TAG_SLUGS.Diary]: {
+    name: '日記',
+    emoji: '📓',
+    slug: TAG_SLUGS.Diary,
+  },
+  [TAG_SLUGS.Chat]: {
+    name: '雜談',
+    emoji: '💬',
+    slug: TAG_SLUGS.Chat,
+  },
+  [TAG_SLUGS.BookReview]: {
+    name: '讀書心得',
+    emoji: '📖',
+    slug: TAG_SLUGS.BookReview,
   },
 } as const;
 

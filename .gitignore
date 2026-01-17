@@ -33,4 +33,5 @@ yarn-error.log*
 # vercel
 .vercel
 public/robots.txt
-public/sitemap.xmltsconfig.tsbuildinfo
+public/sitemap.xml
+tsconfig.tsbuildinfo

@@ -20,7 +20,7 @@ export const SearchLayout: React.VFC<Props> = ({ tags, posts, currentTag }) => {
     if (posts) {
       return posts.filter((post) => {
         const tagContent = post.tags ? post.tags.join(' ') : '';
-        const searchContent = post?.title ?? '' + post?.summary ?? '' + tagContent;
+        const searchContent = `${post?.title ?? ''} ${post?.summary ?? ''} ${tagContent}`;
         return searchContent.toLowerCase().includes(searchValue.toLowerCase());
       });
     }

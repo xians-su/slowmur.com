@@ -81,13 +81,13 @@ export const Header: React.VFC<HeaderProps> = ({ navBarTitle, fullWidth }) => {
     }
   }, []);
   useEffect(() => {
-    const obvserver = new window.IntersectionObserver(handler);
-    if (sentinalRef?.current) obvserver.observe(sentinalRef.current);
-    // Don't touch this, I have no idea how it works XD
-    // return () => {
-    //   if (sentinalRef.current) obvserver.unobserve(sentinalRef.current);
-    // };
-  }, [sentinalRef, handler]);
+    const observer = new window.IntersectionObserver(handler);
+    const currentSentinel = sentinalRef.current;
+    if (currentSentinel) observer.observe(currentSentinel);
+    return () => {
+      if (currentSentinel) observer.unobserve(currentSentinel);
+    };
+  }, [handler]);
   return (
     <>
       <div className="h-4 md:h-12" ref={sentinalRef}></div>

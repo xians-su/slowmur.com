@@ -20,8 +20,7 @@ type Props = {
   createdTime?: string;
   isTagPage?: boolean;
   toc?: {
-    // 添加 toc 屬性
-    links: Array<any>;
+    links: Array<{ id: string | undefined; title: string; level: string }>;
     minLevel: number;
   };
 };

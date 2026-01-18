@@ -10,8 +10,24 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html lang={BLOG.lang} className={BLOG.appearance === 'dark' ? 'dark' : undefined}>
+      <Html lang={BLOG.lang} suppressHydrationWarning>
         <Head>
+          {/* Set theme class before page renders to prevent hydration mismatch */}
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                (function() {
+                  try {
+                    var theme = localStorage.getItem('theme');
+                    if (!theme) theme = '${BLOG.appearance}';
+                    if (theme === 'dark') {
+                      document.documentElement.classList.add('dark');
+                    }
+                  } catch (e) {}
+                })();
+              `,
+            }}
+          />
           {BLOG.font && BLOG.font === 'serif' ? (
             <>
               <link

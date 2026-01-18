@@ -21,10 +21,10 @@ type TagData = {
 };
 
 const TAG_DATA: Record<TagSlug, TagData> = {
-  [TAG_SLUGS.LowCodeHacker]: {
-    name: 'LowCodeHacker',
+  [TAG_SLUGS.LowCode]: {
+    name: 'Low-Code',
     emoji: '👾',
-    slug: TAG_SLUGS.LowCodeHacker,
+    slug: TAG_SLUGS.LowCode,
   },
   [TAG_SLUGS.Productivity]: {
     name: 'Productivity',
@@ -36,10 +36,10 @@ const TAG_DATA: Record<TagSlug, TagData> = {
     emoji: '🎵',
     slug: TAG_SLUGS.Playlist,
   },
-  [TAG_SLUGS.ThinkingFragments]: {
-    name: '思考碎片',
+  [TAG_SLUGS.Thinking]: {
+    name: 'Thinking',
     emoji: '💭',
-    slug: TAG_SLUGS.ThinkingFragments,
+    slug: TAG_SLUGS.Thinking,
   },
   [TAG_SLUGS.Link]: {
     name: 'Link',
@@ -62,8 +62,8 @@ const TAG_DATA: Record<TagSlug, TagData> = {
     slug: TAG_SLUGS.Murmur,
   },
   [TAG_SLUGS.All]: {
-    name: '🌴All',
-    emoji: '',
+    name: 'All',
+    emoji: '🌴',
     slug: TAG_SLUGS.All,
   },
 } as const;

@@ -106,7 +106,7 @@ export const Layout: React.VFC<Props> = ({
 
     const level = [...linksArr].sort((a, b) => (parseInt(a.level) || 0) - (parseInt(b.level) || 0))[0]?.level ?? '2';
     setToc({ links: linksArr, minLevel: parseInt(level) });
-  }, []);
+  }, [router.asPath]);
 
   return onlyContents ? (
     renderContents()

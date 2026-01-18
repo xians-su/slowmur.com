@@ -113,47 +113,6 @@ export const Layout: React.FC<Props> = ({
     setToc({ links: linksArr, minLevel: parseInt(level) });
   }, []);
 
-  // Sync theme with embedded xians.su iframe
-  useEffect(() => {
-    if (!theme) return;
-
-    const sendThemeToIframe = () => {
-      const iframeBlock = document.querySelector(
-        '.notion-block-5550b6d861c44cbd86d2544970284f81 iframe',
-      ) as HTMLIFrameElement;
-      if (iframeBlock?.contentWindow) {
-        iframeBlock.contentWindow.postMessage({ type: 'THEME_SYNC', theme: theme }, 'https://xians.su');
-      }
-    };
-
-    // Send theme immediately (for theme changes)
-    sendThemeToIframe();
-
-    // Listen for theme requests from iframe (when iframe loads and asks for current theme)
-    const handleMessage = (event: MessageEvent) => {
-      if (event.origin !== 'https://xians.su') return;
-      if (event.data?.type === 'THEME_REQUEST') {
-        sendThemeToIframe();
-      }
-    };
-    window.addEventListener('message', handleMessage);
-
-    // Also send theme when iframe loads
-    const iframeBlock = document.querySelector(
-      '.notion-block-5550b6d861c44cbd86d2544970284f81 iframe',
-    ) as HTMLIFrameElement;
-    if (iframeBlock) {
-      iframeBlock.addEventListener('load', sendThemeToIframe);
-    }
-
-    return () => {
-      window.removeEventListener('message', handleMessage);
-      if (iframeBlock) {
-        iframeBlock.removeEventListener('load', sendThemeToIframe);
-      }
-    };
-  }, [theme]);
-
   return onlyContents ? (
     renderContents()
   ) : (

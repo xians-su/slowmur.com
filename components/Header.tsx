@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { SunIcon } from '@heroicons/react/24/solid';
 import { MoonIcon } from '@heroicons/react/24/solid';
 import BLOG from '~/blog.config';
@@ -19,6 +19,13 @@ const links = [
 const NavBar: React.FC = () => {
   const router = useRouter();
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // Avoid hydration mismatch by only rendering theme icon after mount
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const activeNav = useMemo(() => {
     if (router.asPath === links[0].to) return links[0].to;
     if (router.asPath === links[1].to) return links[1].to;
@@ -47,11 +54,12 @@ const NavBar: React.FC = () => {
             onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
             aria-label="toggle Dark Mode"
           >
-            {theme === 'light' ? (
-              <MoonIcon className="size-5 text-day group-hover:text-night" />
-            ) : (
-              <SunIcon className="size-5 text-night group-hover:text-day" />
-            )}
+            {mounted &&
+              (theme === 'light' ? (
+                <MoonIcon className="size-5 text-day group-hover:text-night" />
+              ) : (
+                <SunIcon className="size-5 text-night group-hover:text-day" />
+              ))}
           </button>
         </li>
       </ul>

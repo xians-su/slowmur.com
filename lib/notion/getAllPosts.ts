@@ -1,5 +1,7 @@
 import { NotionAPI } from 'notion-client';
-import type { BasePageBlock, Collection, ExtendedRecordMap } from 'notion-types';
+import { BasePageBlock } from 'notion-types/build/esm/block';
+import { Collection } from 'notion-types/build/esm/collection';
+import { ExtendedRecordMap } from 'notion-types/build/esm/maps';
 import { idToUuid } from 'notion-utils';
 import BLOG from '~/blog.config';
 import { Post } from '~/types';

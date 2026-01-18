@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { SearchIcon } from '@heroicons/react/outline';
 import { BlogPost } from '~/components';
 import { Tags } from '~/components/Tag';
 import { useLocale } from '~/lib/i18n/locale';
@@ -12,7 +12,7 @@ type Props = {
   currentTag?: string;
 };
 
-export const SearchLayout: React.FC<Props> = ({ tags, posts, currentTag }) => {
+export const SearchLayout: React.VFC<Props> = ({ tags, posts, currentTag }) => {
   const [searchValue, setSearchValue] = useState('');
   const locale = useLocale();
 
@@ -20,7 +20,7 @@ export const SearchLayout: React.FC<Props> = ({ tags, posts, currentTag }) => {
     if (posts) {
       return posts.filter((post) => {
         const tagContent = post.tags ? post.tags.join(' ') : '';
-        const searchContent = `${post?.title ?? ''} ${post?.summary ?? ''} ${tagContent}`;
+        const searchContent = post?.title ?? '' + post?.summary ?? '' + tagContent;
         return searchContent.toLowerCase().includes(searchValue.toLowerCase());
       });
     }
@@ -40,16 +40,15 @@ export const SearchLayout: React.FC<Props> = ({ tags, posts, currentTag }) => {
         <input
           type="text"
           placeholder={currentTag ? `${locale.POST.SEARCHIN} #${currentTag}` : locale.POST.SEARCH}
-          className="block w-full rounded-lg border-2 border-gray-300 bg-gray-50 px-4 py-2 text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:bg-gray-700 dark:text-white"
+          className="block py-2 px-4 w-full text-black dark:text-white bg-gray-50 dark:bg-gray-700 rounded-lg border-2 border-gray-300"
           onChange={(e) => setSearchValue(e.target.value)}
-          aria-label={currentTag ? `Search in ${currentTagName}` : 'Search posts'}
         />
-        <MagnifyingGlassIcon className="absolute right-3 top-3 size-5 text-gray-500 dark:text-gray-400" />
+        <SearchIcon className="absolute top-3 right-3 w-5 h-5 text-gray-500 dark:text-gray-400" />
       </div>
       <div className="sticky top-16 z-10 bg-day dark:bg-night">
         <Tags tags={tags} currentTag={currentTag} />
       </div>
-      <div className="article-container my-5">
+      <div className="my-5 article-container">
         {!filteredBlogPosts.length && <p className="text-gray-500 dark:text-gray-300">{locale.POST.NOTFOUND}</p>}
         {filteredBlogPosts.map((post) => (
           <BlogPost key={post.id} post={post} />

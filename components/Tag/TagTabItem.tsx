@@ -1,8 +1,8 @@
 import classNames from 'classnames';
-import { Twemoji } from '~/components/Twemoji';
+import { Twemoji } from 'components/Twemoji';
 import Link from 'next/link';
 import { useMemo } from 'react';
-import { getTagDataBySlug, isTagSlug } from '~/lib/tags';
+import { getTagDataBySlug, TagSlug } from '~/lib/tags';
 
 type Props =
   | {
@@ -16,19 +16,18 @@ type Props =
       root: boolean;
     };
 
-export const TagTabItem: React.FC<Props> = ({ tagKey, selected, ...rest }) => {
-  const tagSlug = isTagSlug(tagKey) ? tagKey : undefined;
+export const TagTabItem: React.VFC<Props> = ({ tagKey, selected, ...rest }) => {
+  const castKey = tagKey as TagSlug;
 
   const linkUrl = useMemo(() => {
-    if (selected || !('count' in rest) || !tagSlug) {
+    if (selected || !('count' in rest)) {
       return '/';
+    } else {
+      return `/tag/${encodeURIComponent(tagKey)}`;
     }
-    return `/tag/${encodeURIComponent(tagSlug)}`;
-  }, [rest, selected, tagSlug]);
+  }, [rest, selected, tagKey]);
 
-  if (!tagSlug) return null;
-
-  const tagData = getTagDataBySlug(tagSlug);
+  const tagData = getTagDataBySlug(castKey);
   return (
     <li
       className={classNames('mr-3 font-bold whitespace-nowrap rounded-lg min-w-max block', {
@@ -37,15 +36,17 @@ export const TagTabItem: React.FC<Props> = ({ tagKey, selected, ...rest }) => {
         'bg-gray-200 text-gray-700 dark:text-night': selected,
       })}
     >
-      <Link href={linkUrl} scroll={false} className="flex items-center px-4 py-2">
-        {tagData?.emoji && <Twemoji emoji={tagData.emoji} size={20} />}
-        <span
-          className={classNames({
-            'ml-2': !!tagData?.emoji,
-          })}
-        >
-          {'count' in rest ? `${tagData?.name ?? tagKey} (${rest.count})` : `${tagData?.name ?? tagKey}`}
-        </span>
+      <Link href={linkUrl} scroll={false}>
+        <a className="flex items-center py-2 px-4">
+          {tagData?.emoji && <Twemoji emoji={tagData.emoji} size={20} />}
+          <span
+            className={classNames({
+              'ml-2': !!tagData?.emoji,
+            })}
+          >
+            {'count' in rest ? `${tagData?.name ?? tagKey} (${rest.count})` : `${tagData?.name ?? tagKey}`}
+          </span>
+        </a>
       </Link>
     </li>
   );

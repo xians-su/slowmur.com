@@ -13,7 +13,7 @@ import { TagItem } from '~/components/Tag';
 import formatDate from '~/lib/formatDate';
 import { useLocale } from '~/lib/i18n/locale';
 import { Post } from '~/types';
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 
 const enableCommentArea = BLOG.comment.provider !== '';
 
@@ -48,8 +48,8 @@ export const Layout: React.VFC<Props> = ({
     <article>
       <h1 className="text-3xl font-bold text-black dark:text-white">{post.title}</h1>
       {post?.type?.[0] !== 'Page' && (
-        <nav className="flex items-start mt-7 mb-4 text-gray-500 dark:text-gray-300">
-          <div className="flex mb-4">
+        <nav className="mb-4 mt-7 flex items-start text-gray-500 dark:text-gray-300">
+          <div className="mb-4 flex">
             <a href={BLOG.socialLink || '#'} className="flex">
               <Image
                 alt={BLOG.author}
@@ -58,13 +58,13 @@ export const Layout: React.VFC<Props> = ({
                 src={`https://gravatar.com/avatar/${emailHash}`}
                 className="rounded-full"
               />
-              <p className="md:block ml-2">{BLOG.author}</p>
+              <p className="ml-2 md:block">{BLOG.author}</p>
             </a>
             <span className="block">&nbsp;/&nbsp;</span>
           </div>
-          <div className="mr-2 mb-4 md:ml-0">{formatDate(post?.date?.start_date || post.createdTime, BLOG.lang)}</div>
+          <div className="mb-4 mr-2 md:ml-0">{formatDate(post?.date?.start_date || post.createdTime, BLOG.lang)}</div>
           {post.tags && (
-            <div className="flex overflow-x-auto flex-nowrap max-w-full article-tags">
+            <div className="article-tags flex max-w-full flex-nowrap overflow-x-auto">
               {post.tags.map((tag) => (
                 <TagItem key={tag} tag={tag} />
               ))}
@@ -73,7 +73,7 @@ export const Layout: React.VFC<Props> = ({
         </nav>
       )}
       {blockMap && (
-        <div className="-mt-4 mb-4 notion-ignore-padding-x">
+        <div className="notion-ignore-padding-x -mt-4 mb-4">
           <NotionRenderer
             recordMap={blockMap}
             components={{
@@ -92,18 +92,18 @@ export const Layout: React.VFC<Props> = ({
   );
 
   const articleRef = useRef();
-  const [toc, setToc] = useState<{ links: { id: string | undefined; title: string; level: string; }[]; minLevel: number; } | undefined>(undefined);
+  const [toc, setToc] = useState<
+    { links: { id: string | undefined; title: string; level: string }[]; minLevel: number } | undefined
+  >(undefined);
 
   useEffect(() => {
-    const links = document.querySelectorAll(".notion-h");
-    const linksArr: { id: string | undefined; title: string; level: string; }[] = Array.from(links).map(
-      (element) => ({
-        id: (element as HTMLElement).dataset.id,
-        title: element.textContent || "",
-        level: element.localName?.substring(1) || "",
-      })
-    );
-  
+    const links = document.querySelectorAll('.notion-h');
+    const linksArr: { id: string | undefined; title: string; level: string }[] = Array.from(links).map((element) => ({
+      id: (element as HTMLElement).dataset.id,
+      title: element.textContent || '',
+      level: element.localName?.substring(1) || '',
+    }));
+
     const level = [...linksArr].sort((a, b) => (parseInt(a.level) || 0) - (parseInt(b.level) || 0))[0]?.level ?? '2';
     setToc({ links: linksArr, minLevel: parseInt(level) });
   }, []);
@@ -129,13 +129,13 @@ export const Layout: React.VFC<Props> = ({
       >
         <button
           onClick={() => router.push(BLOG.path || '/')}
-          className="mt-2 hover:text-black dark:hover:text-gray-100 cursor-pointer"
+          className="mt-2 cursor-pointer hover:text-black dark:hover:text-gray-100"
         >
           ← {locale?.POST.BACK}
         </button>
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="mt-2 hover:text-black dark:hover:text-gray-100 cursor-pointer"
+          className="mt-2 cursor-pointer hover:text-black dark:hover:text-gray-100"
         >
           ↑ {locale?.POST.TOP}
         </button>

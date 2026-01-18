@@ -19,27 +19,27 @@ export const BlogPost: React.VFC<Props> = ({ post }) => {
     return (
       <article
         key={post.id}
-        className="mt-2 mb-6 md:mb-8 hover:opacity-90 transition-transform ease-out hover:scale-105"
+        className="mb-6 mt-2 transition-transform ease-out hover:scale-105 hover:opacity-90 md:mb-8"
       >
-        <header className="flex flex-col md:flex-row justify-between md:items-baseline">
+        <header>
+          <time className="mb-2 inline-block text-sm text-gray-600 dark:text-gray-400">
+            {formatDate(post?.date?.start_date || post.createdTime, BLOG.lang)}
+          </time>
           <div className="flex">
-            <h2 className="mb-2 text-lg md:text-xl font-bold text-black dark:text-white cursor-pointer">
+            <h2 className="mb-2 cursor-pointer text-lg font-bold text-black dark:text-white md:text-xl">
               {post.title}
             </h2>
             {isOuterLink && (
-              <ExternalLinkIcon className="mt-[0.5px] mr-2 sm:mr-0 ml-1 w-5 min-w-[20px] h-5 text-blue-700 dark:text-blue-400" />
+              <ExternalLinkIcon className="ml-1 mr-2 mt-[0.5px] size-5 min-w-[20px] text-blue-700 dark:text-blue-400 sm:mr-0" />
             )}
           </div>
-          <time className="flex-shrink-0 text-gray-600 dark:text-gray-400">
-            {formatDate(post?.date?.start_date || post.createdTime, BLOG.lang)}
-          </time>
         </header>
         {post?.thumbnail_url && (
           <img
             src={post.thumbnail_url}
             alt={post.title}
             decoding="async"
-            className="my-3 bg-gray-100 dark:bg-gray-900 rounded-md drop-shadow-md"
+            className="my-3 rounded-md bg-gray-100 drop-shadow-md dark:bg-gray-900"
           />
         )}
         <main>
@@ -55,7 +55,7 @@ export const BlogPost: React.VFC<Props> = ({ post }) => {
           <a
             href={post.repo_url}
             target="_blank"
-            className="text-blue-700 dark:text-blue-400 border-blue-700 dark:border-blue-400"
+            className="border-blue-700 text-blue-700 dark:border-blue-400 dark:text-blue-400"
             rel="noreferrer"
           >
             {post.repo_url}

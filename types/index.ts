@@ -4,7 +4,7 @@ import type { ReactCusdis } from 'react-cusdis';
 
 export type PostType = 'Post' | 'Page' | 'Project';
 
-export type PostStatus = 'Idea' | 'Published' | 'Revise' | 'Published';
+export type PostStatus = 'Idea' | 'Published' | 'Revise' | 'Draft';
 
 export type Post = {
   id: string;
@@ -79,5 +79,5 @@ export type BlogConfig = {
       scriptSrc: string;
     };
   };
-  isProd: 'development' | 'preview' | 'production';
+  isProd: boolean;
 };

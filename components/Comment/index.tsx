@@ -31,7 +31,7 @@ type Props = {
   post: Post;
 };
 
-export const Comments: React.VFC<Props> = ({ post }) => {
+export const Comments: React.FC<Props> = ({ post }) => {
   const router = useRouter();
   return (
     <div>

@@ -4,10 +4,16 @@ const path = require('path');
  * @type {import('next').NextConfig}
  **/
 const nextConfig = {
-  swcMinify: true,
   reactStrictMode: true,
   images: {
-    domains: ['gravatar.com', 'pbs.twimg.com', 'twemoji.maxcdn.com'],
+    remotePatterns: [
+      { protocol: 'https', hostname: 'gravatar.com' },
+      { protocol: 'https', hostname: 'pbs.twimg.com' },
+      { protocol: 'https', hostname: 'twemoji.maxcdn.com' },
+      { protocol: 'https', hostname: 'cdn.jsdelivr.net' },
+      { protocol: 'https', hostname: '**.notion.so' },
+      { protocol: 'https', hostname: '**.amazonaws.com' },
+    ],
   },
   eslint: {
     dirs: ['components', 'layouts', 'lib', 'pages'],
@@ -21,20 +27,37 @@ const nextConfig = {
             key: 'Permissions-Policy',
             value: 'interest-cohort=()',
           },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'SAMEORIGIN',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin',
+          },
+          {
+            key: 'Content-Security-Policy',
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://www.googletagmanager.com",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+              "img-src 'self' data: blob: https: http:",
+              "font-src 'self' https://fonts.gstatic.com data:",
+              "connect-src 'self' https://api.notion.com https://*.notion.so",
+              "frame-src 'self' https://utteranc.es https://cusdis.com https:",
+              "media-src 'self' https:",
+            ].join('; '),
+          },
         ],
       },
     ];
   },
-  webpack: (config, { dev, isServer }) => {
+  webpack: (config) => {
     config.resolve.alias['~'] = path.join(__dirname, '.');
-    // Replace React with Preact only in client production build
-    if (!dev && !isServer) {
-      Object.assign(config.resolve.alias, {
-        react: 'preact/compat',
-        'react-dom/test-utils': 'preact/test-utils',
-        'react-dom': 'preact/compat',
-      });
-    }
     return config;
   },
 };

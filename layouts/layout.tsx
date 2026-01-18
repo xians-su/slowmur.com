@@ -1,12 +1,21 @@
 import classNames from 'classnames';
 import 'gitalk/dist/gitalk.css';
 import { useTheme } from 'next-themes';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { ExtendedRecordMap } from 'notion-types/build/esm/maps';
-import { NotionRenderer, Equation, Code, CollectionRow, Collection } from 'react-notion-x';
-import type { Tweet } from 'react-static-tweets';
+import type { ExtendedRecordMap } from 'notion-types';
+import { NotionRenderer } from 'react-notion-x';
 import BLOG from '~/blog.config';
+
+// Dynamic imports for react-notion-x components
+const Code = dynamic(() => import('react-notion-x/build/third-party/code').then((m) => m.Code), { ssr: false });
+const Collection = dynamic(() => import('react-notion-x/build/third-party/collection').then((m) => m.Collection), {
+  ssr: false,
+});
+const Equation = dynamic(() => import('react-notion-x/build/third-party/equation').then((m) => m.Equation), {
+  ssr: false,
+});
 import { Container } from '~/components';
 import { Comments } from '~/components/Comment';
 import { TagItem } from '~/components/Tag';
@@ -27,15 +36,13 @@ type Props = {
   emailHash: string;
   fullWidth?: boolean;
   onlyContents?: boolean;
-  tweet?: typeof Tweet;
   slug?: string | null;
 };
 
-export const Layout: React.VFC<Props> = ({
+export const Layout: React.FC<Props> = ({
   blockMap,
   post,
   emailHash,
-  tweet,
   slug,
   fullWidth = false,
   onlyContents = false,
@@ -55,7 +62,7 @@ export const Layout: React.VFC<Props> = ({
                 alt={BLOG.author}
                 width={24}
                 height={24}
-                src={`https://gravatar.com/avatar/${emailHash}`}
+                src={`https://gravatar.com/avatar/${emailHash}?s=80`}
                 className="rounded-full"
               />
               <p className="ml-2 md:block">{BLOG.author}</p>
@@ -77,11 +84,9 @@ export const Layout: React.VFC<Props> = ({
           <NotionRenderer
             recordMap={blockMap}
             components={{
-              equation: Equation,
-              code: Code,
-              collection: Collection,
-              collectionRow: CollectionRow,
-              tweet: tweet,
+              Code,
+              Collection,
+              Equation,
             }}
             mapPageUrl={mapPageUrl}
             darkMode={theme !== 'light'}
@@ -93,19 +98,22 @@ export const Layout: React.VFC<Props> = ({
 
   const articleRef = useRef();
   const [toc, setToc] = useState<
-    { links: { id: string | undefined; title: string; level: string }[]; minLevel: number } | undefined
+    { links: { id: string; title: string; level: number; active: boolean }[]; minLevel: number } | undefined
   >(undefined);
 
   useEffect(() => {
-    const links = document.querySelectorAll('.notion-h');
-    const linksArr: { id: string | undefined; title: string; level: string }[] = Array.from(links).map((element) => ({
-      id: (element as HTMLElement).dataset.id,
-      title: element.textContent || '',
-      level: element.localName?.substring(1) || '',
-    }));
+    const elements = document.querySelectorAll('.notion-h');
+    const linksArr = Array.from(elements)
+      .map((element) => ({
+        id: (element as HTMLElement).dataset.id,
+        title: element.textContent || '',
+        level: parseInt(element.localName?.substring(1) || '2', 10),
+        active: false,
+      }))
+      .filter((link): link is { id: string; title: string; level: number; active: boolean } => link.id !== undefined);
 
-    const level = [...linksArr].sort((a, b) => (parseInt(a.level) || 0) - (parseInt(b.level) || 0))[0]?.level ?? '2';
-    setToc({ links: linksArr, minLevel: parseInt(level) });
+    const minLevel = linksArr.length > 0 ? Math.min(...linksArr.map((l) => l.level)) : 2;
+    setToc({ links: linksArr, minLevel });
   }, []);
 
   return onlyContents ? (

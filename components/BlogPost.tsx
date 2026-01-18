@@ -1,6 +1,7 @@
 import classNames from 'classnames';
+import Image from 'next/image';
 import Link from 'next/link';
-import { ExternalLinkIcon } from '@heroicons/react/outline';
+import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
 import BLOG from '~/blog.config';
 import formatDate from '~/lib/formatDate';
 import { Post } from '~/types';
@@ -13,7 +14,7 @@ type RenderBlogPostArg = {
   isOuterLink: boolean;
 };
 
-export const BlogPost: React.VFC<Props> = ({ post }) => {
+export const BlogPost: React.FC<Props> = ({ post }) => {
   const isProject = post?.type?.[0] === 'Project';
   const renderBlogPost = ({ isOuterLink }: RenderBlogPostArg) => {
     return (
@@ -30,17 +31,21 @@ export const BlogPost: React.VFC<Props> = ({ post }) => {
               {post.title}
             </h2>
             {isOuterLink && (
-              <ExternalLinkIcon className="ml-1 mr-2 mt-[0.5px] size-5 min-w-[20px] text-blue-700 dark:text-blue-400 sm:mr-0" />
+              <ArrowTopRightOnSquareIcon className="ml-1 mr-2 mt-[0.5px] size-5 min-w-[20px] text-blue-700 dark:text-blue-400 sm:mr-0" />
             )}
           </div>
         </header>
         {post?.thumbnail_url && (
-          <img
-            src={post.thumbnail_url}
-            alt={post.title}
-            decoding="async"
-            className="my-3 rounded-md bg-gray-100 drop-shadow-md dark:bg-gray-900"
-          />
+          <div className="relative my-3 aspect-video w-full overflow-hidden rounded-md bg-gray-100 drop-shadow-md dark:bg-gray-900">
+            <Image
+              src={post.thumbnail_url}
+              alt={post.title || 'Post thumbnail'}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover"
+              loading="lazy"
+            />
+          </div>
         )}
         <main>
           <p
@@ -70,8 +75,6 @@ export const BlogPost: React.VFC<Props> = ({ post }) => {
       {renderBlogPost({ isOuterLink: true })}
     </a>
   ) : (
-    <Link href={`${BLOG.path}/${post.slug}`}>
-      <a>{renderBlogPost({ isOuterLink: false })}</a>
-    </Link>
+    <Link href={`${BLOG.path}/${post.slug}`}>{renderBlogPost({ isOuterLink: false })}</Link>
   );
 };

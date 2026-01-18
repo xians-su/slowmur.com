@@ -6,7 +6,7 @@ type Props = {
   layout?: 'fullWidth';
 };
 
-const Utterances: React.VFC<Props> = ({ issueTerm, layout }) => {
+const Utterances: React.FC<Props> = ({ issueTerm, layout }) => {
   useEffect(() => {
     const theme = BLOG.appearance === 'light' ? 'github-light' : 'github-dark';
     const script = document.createElement('script');
@@ -19,9 +19,13 @@ const Utterances: React.VFC<Props> = ({ issueTerm, layout }) => {
     script.setAttribute('theme', theme);
     anchor?.appendChild(script);
     return () => {
-      if (anchor?.innerHTML) anchor.innerHTML = '';
+      if (anchor) {
+        while (anchor.firstChild) {
+          anchor.removeChild(anchor.firstChild);
+        }
+      }
     };
-  });
+  }, [issueTerm]);
   return (
     <>
       <div id="comments" className={layout && layout === 'fullWidth' ? '' : 'md:-ml-16'}>

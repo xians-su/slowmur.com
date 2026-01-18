@@ -3,9 +3,9 @@ import { ValueOf } from 'lib/types';
 const TAG_SLUGS = {
   All: 'all',
   Murmur: 'murmur',
-  ThinkingFragments: 'thinking-fragments',
+  Thinking: 'thinking',
   Link: 'link',
-  LowCodeHacker: 'lowcode-hacker',
+  LowCode: 'low-code',
   Productivity: 'productivity',
   Playlist: 'playlist',
   Reading: 'reading',
@@ -21,10 +21,10 @@ type TagData = {
 };
 
 const TAG_DATA: Record<TagSlug, TagData> = {
-  [TAG_SLUGS.LowCodeHacker]: {
-    name: 'LowCode Hacker',
+  [TAG_SLUGS.LowCode]: {
+    name: 'Low-Code',
     emoji: '👾',
-    slug: TAG_SLUGS.LowCodeHacker,
+    slug: TAG_SLUGS.LowCode,
   },
   [TAG_SLUGS.Productivity]: {
     name: 'Productivity',
@@ -36,10 +36,10 @@ const TAG_DATA: Record<TagSlug, TagData> = {
     emoji: '🎵',
     slug: TAG_SLUGS.Playlist,
   },
-  [TAG_SLUGS.ThinkingFragments]: {
-    name: 'Thinking Fragments',
+  [TAG_SLUGS.Thinking]: {
+    name: 'Thinking',
     emoji: '💭',
-    slug: TAG_SLUGS.ThinkingFragments,
+    slug: TAG_SLUGS.Thinking,
   },
   [TAG_SLUGS.Link]: {
     name: 'Link',

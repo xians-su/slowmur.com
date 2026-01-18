@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { SunIcon } from '@heroicons/react/24/solid';
 import { MoonIcon } from '@heroicons/react/24/solid';
 import BLOG from '~/blog.config';
@@ -18,12 +18,7 @@ const links = [
 
 const NavBar: React.FC = () => {
   const router = useRouter();
-  const { theme, setTheme, resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const { setTheme, resolvedTheme } = useTheme();
 
   const activeNav = useMemo(() => {
     if (router.asPath === links[0].to) return links[0].to;
@@ -31,8 +26,9 @@ const NavBar: React.FC = () => {
     return links[0].to;
   }, [router]);
 
-  // Determine which icon to show - use default theme for SSR, resolved theme after mount
-  const isDark = mounted ? resolvedTheme === 'dark' : BLOG.appearance === 'dark';
+  // Use resolvedTheme if available, otherwise fall back to default appearance
+  // This prevents showing wrong icon when resolvedTheme is still undefined
+  const isDark = resolvedTheme !== undefined ? resolvedTheme === 'dark' : BLOG.appearance === 'dark';
 
   return (
     <div className="shrink-0">
@@ -53,7 +49,7 @@ const NavBar: React.FC = () => {
         <li className="ml-4">
           <button
             className="group block rounded-full bg-night p-1 transition-all duration-300 hover:bg-day dark:bg-day dark:hover:bg-night"
-            onClick={() => setTheme(resolvedTheme === 'light' ? 'dark' : 'light')}
+            onClick={() => setTheme(isDark ? 'light' : 'dark')}
             aria-label="toggle Dark Mode"
           >
             {isDark ? (

@@ -119,7 +119,7 @@ export const Layout: React.VFC<Props> = ({
       type="article"
       fullWidth={fullWidth}
       slug={slug}
-      toc={toc}
+      toc={post?.type?.[0] !== 'Page' ? toc : undefined}
     >
       {renderContents()}
       <div

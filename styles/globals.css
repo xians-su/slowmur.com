@@ -210,17 +210,20 @@ nav {
   position: absolute;
   left: 0;
   bottom: 0;
-  width: 0;
+  width: 100%;
   border-bottom: solid 2px #000;
+  transform: scaleX(0);
+  transform-origin: left;
   animation: border_anim 3s linear forwards;
+  will-change: transform;
 }
 
 @keyframes border_anim {
   0% {
-    width: 0%;
+    transform: scaleX(0);
   }
   100% {
-    width: 100%;
+    transform: scaleX(1);
   }
 }
 

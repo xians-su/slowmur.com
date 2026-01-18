@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import 'gitalk/dist/gitalk.css';
 import { useTheme } from 'next-themes';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { ExtendedRecordMap } from 'notion-types/build/esm/maps';
 import { NotionRenderer, Equation, Code, CollectionRow, Collection } from 'react-notion-x';
@@ -44,15 +45,26 @@ export const Layout: React.VFC<Props> = ({
   const { theme } = useTheme();
 
   const renderContents = () => (
-    <article className="mb-8 mt-4 md:mt-0">
-      <h1 className="text-2xl font-bold text-black dark:text-white md:text-3xl">{post.title}</h1>
+    <article>
+      <h1 className="text-3xl font-bold text-black dark:text-white">{post.title}</h1>
       {post?.type?.[0] !== 'Page' && (
-        <nav className="mb-4 mt-5 flex items-center text-gray-500 dark:text-gray-300">
-          <div className="mt-2 flex">
-            <div className="mr-2 md:ml-0">{formatDate(post?.date?.start_date || post.createdTime, BLOG.lang)}</div>
+        <nav className="mb-4 mt-7 flex items-start text-gray-500 dark:text-gray-300">
+          <div className="mb-4 flex">
+            <a href={BLOG.socialLink || '#'} className="flex">
+              <Image
+                alt={BLOG.author}
+                width={24}
+                height={24}
+                src={`https://gravatar.com/avatar/${emailHash}`}
+                className="rounded-full"
+              />
+              <p className="ml-2 md:block">{BLOG.author}</p>
+            </a>
+            <span className="block">&nbsp;/&nbsp;</span>
           </div>
+          <div className="mb-4 mr-2 md:ml-0">{formatDate(post?.date?.start_date || post.createdTime, BLOG.lang)}</div>
           {post.tags && (
-            <div className="article-tags mb-1 mt-2 flex max-w-full flex-nowrap overflow-x-auto">
+            <div className="article-tags flex max-w-full flex-nowrap overflow-x-auto">
               {post.tags.map((tag) => (
                 <TagItem key={tag} tag={tag} />
               ))}

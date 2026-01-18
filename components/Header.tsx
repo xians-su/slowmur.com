@@ -3,8 +3,8 @@ import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
-import { SunIcon } from '@heroicons/react/24/solid';
-import { MoonIcon } from '@heroicons/react/24/solid';
+import { SunIcon } from '@heroicons/react/solid';
+import { MoonIcon } from '@heroicons/react/solid';
 import BLOG from '~/blog.config';
 import { fetchLocaleLang } from '~/lib/i18n/lang';
 import { Twemoji } from './Twemoji';
@@ -16,7 +16,7 @@ const links = [
   { id: 3, name: locale.NAV.RSS, to: '/feed', show: true },
 ];
 
-const NavBar: React.FC = () => {
+const NavBar: React.VFC = () => {
   const router = useRouter();
   const { theme, setTheme } = useTheme();
   const activeNav = useMemo(() => {
@@ -37,7 +37,9 @@ const NavBar: React.FC = () => {
                   'border-b-2 border-blue-700 dark:border-blue-400': link.to === activeNav,
                 })}
               >
-                <Link href={link.to}>{link.name}</Link>
+                <Link href={link.to}>
+                  <a>{link.name}</a>
+                </Link>
               </li>
             ),
         )}
@@ -64,7 +66,7 @@ type HeaderProps = {
   fullWidth?: boolean;
 };
 
-export const Header: React.FC<HeaderProps> = ({ navBarTitle, fullWidth }) => {
+export const Header: React.VFC<HeaderProps> = ({ navBarTitle, fullWidth }) => {
   const navRef = useRef<HTMLDivElement>(null);
   const sentinalRef = useRef<HTMLDivElement>(null);
   const handler = useCallback(([entry]: IntersectionObserverEntry[]) => {
@@ -79,13 +81,13 @@ export const Header: React.FC<HeaderProps> = ({ navBarTitle, fullWidth }) => {
     }
   }, []);
   useEffect(() => {
-    const observer = new window.IntersectionObserver(handler);
-    const currentSentinel = sentinalRef.current;
-    if (currentSentinel) observer.observe(currentSentinel);
-    return () => {
-      if (currentSentinel) observer.unobserve(currentSentinel);
-    };
-  }, [handler]);
+    const obvserver = new window.IntersectionObserver(handler);
+    if (sentinalRef?.current) obvserver.observe(sentinalRef.current);
+    // Don't touch this, I have no idea how it works XD
+    // return () => {
+    //   if (sentinalRef.current) obvserver.unobserve(sentinalRef.current);
+    // };
+  }, [sentinalRef, handler]);
   return (
     <>
       <div className="h-4 md:h-12" ref={sentinalRef}></div>
@@ -101,10 +103,12 @@ export const Header: React.FC<HeaderProps> = ({ navBarTitle, fullWidth }) => {
         ref={navRef}
       >
         <div className="flex items-center">
-          <Link href="/" aria-label={BLOG.title}>
-            <div className="min-w-max">
-              <Twemoji emoji={'💬'} size={28} />
-            </div>
+          <Link href="/">
+            <a aria-label={BLOG.title}>
+              <div className="min-w-max">
+                <Twemoji emoji={'💬'} size={28} />
+              </div>
+            </a>
           </Link>
           {navBarTitle ? (
             <p className="header-name ml-2 font-medium text-day dark:text-night">{navBarTitle}</p>

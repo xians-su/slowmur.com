@@ -1,21 +1,12 @@
 import classNames from 'classnames';
 import 'gitalk/dist/gitalk.css';
 import { useTheme } from 'next-themes';
-import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import type { ExtendedRecordMap } from 'notion-types';
-import { NotionRenderer } from 'react-notion-x';
+import { ExtendedRecordMap } from 'notion-types/build/esm/maps';
+import { NotionRenderer, Equation, Code, CollectionRow, Collection } from 'react-notion-x';
+import type { Tweet } from 'react-static-tweets';
 import BLOG from '~/blog.config';
-
-// Dynamic imports for react-notion-x components
-const Code = dynamic(() => import('react-notion-x/build/third-party/code').then((m) => m.Code), { ssr: false });
-const Collection = dynamic(() => import('react-notion-x/build/third-party/collection').then((m) => m.Collection), {
-  ssr: false,
-});
-const Equation = dynamic(() => import('react-notion-x/build/third-party/equation').then((m) => m.Equation), {
-  ssr: false,
-});
 import { Container } from '~/components';
 import { Comments } from '~/components/Comment';
 import { TagItem } from '~/components/Tag';
@@ -36,13 +27,15 @@ type Props = {
   emailHash: string;
   fullWidth?: boolean;
   onlyContents?: boolean;
+  tweet?: typeof Tweet;
   slug?: string | null;
 };
 
-export const Layout: React.FC<Props> = ({
+export const Layout: React.VFC<Props> = ({
   blockMap,
   post,
   emailHash,
+  tweet,
   slug,
   fullWidth = false,
   onlyContents = false,
@@ -84,9 +77,11 @@ export const Layout: React.FC<Props> = ({
           <NotionRenderer
             recordMap={blockMap}
             components={{
-              Code,
-              Collection,
-              Equation,
+              equation: Equation,
+              code: Code,
+              collection: Collection,
+              collectionRow: CollectionRow,
+              tweet: tweet,
             }}
             mapPageUrl={mapPageUrl}
             darkMode={theme !== 'light'}

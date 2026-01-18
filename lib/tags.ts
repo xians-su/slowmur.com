@@ -21,10 +21,10 @@ type TagData = {
 };
 
 const TAG_DATA: Record<TagSlug, TagData> = {
-  [TAG_SLUGS.LowCode]: {
-    name: 'Low-Code',
+  [TAG_SLUGS.LowCodeHacker]: {
+    name: 'LowCode Hacker',
     emoji: '👾',
-    slug: TAG_SLUGS.LowCode,
+    slug: TAG_SLUGS.LowCodeHacker,
   },
   [TAG_SLUGS.Productivity]: {
     name: 'Productivity',
@@ -36,10 +36,10 @@ const TAG_DATA: Record<TagSlug, TagData> = {
     emoji: '🎵',
     slug: TAG_SLUGS.Playlist,
   },
-  [TAG_SLUGS.Thinking]: {
-    name: 'Thinking',
+  [TAG_SLUGS.ThinkingFragments]: {
+    name: 'Thinking Fragments',
     emoji: '💭',
-    slug: TAG_SLUGS.Thinking,
+    slug: TAG_SLUGS.ThinkingFragments,
   },
   [TAG_SLUGS.Link]: {
     name: 'Link',
@@ -67,5 +67,7 @@ const TAG_DATA: Record<TagSlug, TagData> = {
     slug: TAG_SLUGS.All,
   },
 } as const;
+
+export const isTagSlug = (slug: string): slug is TagSlug => (Object.values(TAG_SLUGS) as string[]).includes(slug);
 
 export const getTagDataBySlug = (slug: TagSlug): TagData => TAG_DATA[slug];

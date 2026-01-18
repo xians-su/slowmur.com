@@ -113,6 +113,19 @@ export const Layout: React.FC<Props> = ({
     setToc({ links: linksArr, minLevel: parseInt(level) });
   }, []);
 
+  // Sync theme with embedded xians.su iframe
+  useEffect(() => {
+    if (!theme) return;
+
+    // Find the xians.su iframe (block ID: 5550b6d861c44cbd86d2544970284f81)
+    const iframeBlock = document.querySelector(
+      '.notion-block-5550b6d861c44cbd86d2544970284f81 iframe',
+    ) as HTMLIFrameElement;
+    if (iframeBlock?.contentWindow) {
+      iframeBlock.contentWindow.postMessage({ type: 'THEME_SYNC', theme: theme }, 'https://xians.su');
+    }
+  }, [theme]);
+
   return onlyContents ? (
     renderContents()
   ) : (

@@ -21,7 +21,10 @@ export const BlogPost: React.FC<Props> = ({ post }) => {
         key={post.id}
         className="mb-6 mt-2 transition-transform ease-out hover:scale-105 hover:opacity-90 md:mb-8"
       >
-        <header className="flex flex-col justify-between md:flex-row md:items-baseline">
+        <header>
+          <time className="mb-2 inline-block text-sm text-gray-600 dark:text-gray-400">
+            {formatDate(post?.date?.start_date || post.createdTime, BLOG.lang)}
+          </time>
           <div className="flex">
             <h2 className="mb-2 cursor-pointer text-lg font-bold text-black dark:text-white md:text-xl">
               {post.title}
@@ -30,9 +33,6 @@ export const BlogPost: React.FC<Props> = ({ post }) => {
               <ArrowTopRightOnSquareIcon className="ml-1 mr-2 mt-[0.5px] size-5 min-w-[20px] text-blue-700 dark:text-blue-400 sm:mr-0" />
             )}
           </div>
-          <time className="shrink-0 text-gray-600 dark:text-gray-400">
-            {formatDate(post?.date?.start_date || post.createdTime, BLOG.lang)}
-          </time>
         </header>
         {post?.thumbnail_url && (
           <img

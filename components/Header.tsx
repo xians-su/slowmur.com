@@ -18,17 +18,12 @@ const links = [
 
 const NavBar: React.FC = () => {
   const router = useRouter();
-  const { setTheme, resolvedTheme } = useTheme();
-
+  const { theme, setTheme } = useTheme();
   const activeNav = useMemo(() => {
     if (router.asPath === links[0].to) return links[0].to;
     if (router.asPath === links[1].to) return links[1].to;
     return links[0].to;
   }, [router]);
-
-  // Use resolvedTheme if available, otherwise fall back to default appearance
-  // This prevents showing wrong icon when resolvedTheme is still undefined
-  const isDark = resolvedTheme !== undefined ? resolvedTheme === 'dark' : BLOG.appearance === 'dark';
 
   return (
     <div className="shrink-0">
@@ -49,13 +44,14 @@ const NavBar: React.FC = () => {
         <li className="ml-4">
           <button
             className="group block rounded-full bg-night p-1 transition-all duration-300 hover:bg-day dark:bg-day dark:hover:bg-night"
-            onClick={() => setTheme(isDark ? 'light' : 'dark')}
+            onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
             aria-label="toggle Dark Mode"
           >
-            <div className="relative size-5">
-              <MoonIcon className="absolute inset-0 text-day opacity-100 transition-opacity duration-300 dark:opacity-0" />
-              <SunIcon className="absolute inset-0 text-night opacity-0 transition-opacity duration-300 dark:opacity-100" />
-            </div>
+            {theme === 'light' ? (
+              <MoonIcon className="size-5 text-day group-hover:text-night" />
+            ) : (
+              <SunIcon className="size-5 text-night group-hover:text-day" />
+            )}
           </button>
         </li>
       </ul>

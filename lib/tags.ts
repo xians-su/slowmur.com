@@ -3,9 +3,9 @@ import { ValueOf } from 'lib/types';
 const TAG_SLUGS = {
   All: 'all',
   Murmur: 'murmur',
-  ThinkingFragments: 'thinking-fragments',
+  Thinking: 'thinking',
   Link: 'link',
-  LowCodeHacker: 'lowcode-hacker',
+  LowCode: 'low-code',
   Productivity: 'productivity',
   Playlist: 'playlist',
   Reading: 'reading',
@@ -67,5 +67,7 @@ const TAG_DATA: Record<TagSlug, TagData> = {
     slug: TAG_SLUGS.All,
   },
 } as const;
+
+export const isTagSlug = (slug: string): slug is TagSlug => (Object.values(TAG_SLUGS) as string[]).includes(slug);
 
 export const getTagDataBySlug = (slug: TagSlug): TagData => TAG_DATA[slug];

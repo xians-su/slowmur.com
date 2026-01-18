@@ -20,7 +20,7 @@ type Props = {
   createdTime?: string;
   isTagPage?: boolean;
   toc?: {
-    links: Array<{ id: string | undefined; title: string; level: string }>;
+    links: Array<{ id: string; title: string; level: number; active: boolean }>;
     minLevel: number;
   };
 };

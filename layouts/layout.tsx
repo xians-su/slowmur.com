@@ -98,19 +98,22 @@ export const Layout: React.FC<Props> = ({
 
   const articleRef = useRef();
   const [toc, setToc] = useState<
-    { links: { id: string | undefined; title: string; level: string }[]; minLevel: number } | undefined
+    { links: { id: string; title: string; level: number; active: boolean }[]; minLevel: number } | undefined
   >(undefined);
 
   useEffect(() => {
-    const links = document.querySelectorAll('.notion-h');
-    const linksArr: { id: string | undefined; title: string; level: string }[] = Array.from(links).map((element) => ({
-      id: (element as HTMLElement).dataset.id,
-      title: element.textContent || '',
-      level: element.localName?.substring(1) || '',
-    }));
+    const elements = document.querySelectorAll('.notion-h');
+    const linksArr = Array.from(elements)
+      .map((element) => ({
+        id: (element as HTMLElement).dataset.id,
+        title: element.textContent || '',
+        level: parseInt(element.localName?.substring(1) || '2', 10),
+        active: false,
+      }))
+      .filter((link): link is { id: string; title: string; level: number; active: boolean } => link.id !== undefined);
 
-    const level = [...linksArr].sort((a, b) => (parseInt(a.level) || 0) - (parseInt(b.level) || 0))[0]?.level ?? '2';
-    setToc({ links: linksArr, minLevel: parseInt(level) });
+    const minLevel = linksArr.length > 0 ? Math.min(...linksArr.map((l) => l.level)) : 2;
+    setToc({ links: linksArr, minLevel });
   }, []);
 
   return onlyContents ? (

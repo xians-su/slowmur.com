@@ -52,11 +52,10 @@ const NavBar: React.FC = () => {
             onClick={() => setTheme(isDark ? 'light' : 'dark')}
             aria-label="toggle Dark Mode"
           >
-            {/* Use CSS to control icon visibility - syncs with button background */}
-            {/* Light mode: dark button (bg-night) + white icon (text-day) */}
-            <MoonIcon className="block size-5 text-day group-hover:text-night dark:hidden" />
-            {/* Dark mode: white button (dark:bg-day) + dark icon (text-night) */}
-            <SunIcon className="hidden size-5 text-night group-hover:text-day dark:block" />
+            <div className="relative size-5">
+              <MoonIcon className="absolute inset-0 text-day opacity-100 transition-opacity duration-300 dark:opacity-0" />
+              <SunIcon className="absolute inset-0 text-night opacity-0 transition-opacity duration-300 dark:opacity-100" />
+            </div>
           </button>
         </li>
       </ul>

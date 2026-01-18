@@ -228,3 +228,17 @@ nav {
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
+
+/* Accessibility: Focus-visible styles for keyboard navigation */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid rgb(59, 130, 246);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Remove default focus outline for mouse users */
+a:focus:not(:focus-visible),
+button:focus:not(:focus-visible) {
+  outline: none;
+}

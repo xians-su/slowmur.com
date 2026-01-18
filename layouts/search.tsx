@@ -40,8 +40,9 @@ export const SearchLayout: React.FC<Props> = ({ tags, posts, currentTag }) => {
         <input
           type="text"
           placeholder={currentTag ? `${locale.POST.SEARCHIN} #${currentTag}` : locale.POST.SEARCH}
-          className="block w-full rounded-lg border-2 border-gray-300 bg-gray-50 px-4 py-2 text-black dark:bg-gray-700 dark:text-white"
+          className="block w-full rounded-lg border-2 border-gray-300 bg-gray-50 px-4 py-2 text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:bg-gray-700 dark:text-white"
           onChange={(e) => setSearchValue(e.target.value)}
+          aria-label={currentTag ? `Search in ${currentTagName}` : 'Search posts'}
         />
         <MagnifyingGlassIcon className="absolute right-3 top-3 size-5 text-gray-500 dark:text-gray-400" />
       </div>

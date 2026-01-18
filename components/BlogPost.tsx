@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
 import BLOG from '~/blog.config';
@@ -35,12 +36,16 @@ export const BlogPost: React.FC<Props> = ({ post }) => {
           </div>
         </header>
         {post?.thumbnail_url && (
-          <img
-            src={post.thumbnail_url}
-            alt={post.title}
-            decoding="async"
-            className="my-3 rounded-md bg-gray-100 drop-shadow-md dark:bg-gray-900"
-          />
+          <div className="relative my-3 aspect-video w-full overflow-hidden rounded-md bg-gray-100 drop-shadow-md dark:bg-gray-900">
+            <Image
+              src={post.thumbnail_url}
+              alt={post.title || 'Post thumbnail'}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover"
+              loading="lazy"
+            />
+          </div>
         )}
         <main>
           <p

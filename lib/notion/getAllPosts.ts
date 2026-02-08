@@ -6,12 +6,13 @@ import { idToUuid } from 'notion-utils';
 import BLOG from '~/blog.config';
 import { Post } from '~/types';
 import { getPageProperties, getAllPageIds, filterPublishedPosts } from './index';
+import { normalizeRecordMap } from './normalizeRecordMap';
 
 export const getAllPosts = async ({ includedPages = false }: { includedPages: boolean }): Promise<Post[]> => {
   let id = BLOG.notionPageId;
   const authToken = BLOG.notionAccessToken;
   const api = new NotionAPI({ authToken });
-  const response = await api.getPage(id);
+  const response = normalizeRecordMap(await api.getPage(id));
 
   id = idToUuid(id);
   const collection = Object.values(response.collection)[0]?.value;

@@ -6,3 +6,4 @@ export * from './getMetadata';
 export * from './getPageProperties';
 export * from './getPostBlocks';
 export * from './getProfilePost';
+export * from './normalizeRecordMap';

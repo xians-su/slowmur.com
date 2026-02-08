@@ -27,12 +27,12 @@ export const normalizeRecordMap = (recordMap: ExtendedRecordMap): ExtendedRecord
 
   if (recordMap.collection_query) {
     for (const views of Object.values(recordMap.collection_query)) {
-      for (const [vid, viewData] of Object.entries(views as Record<string, Record<string, unknown>>)) {
+      for (const [vid, viewData] of Object.entries(views as unknown as Record<string, Record<string, unknown>>)) {
         const cgr = viewData?.collection_group_results as
           | { type?: string; blockIds?: string[]; hasMore?: boolean }
           | undefined;
         if (cgr?.blockIds && !viewData?.blockIds) {
-          (views as Record<string, unknown>)[vid] = {
+          (views as unknown as Record<string, unknown>)[vid] = {
             ...viewData,
             type: cgr.type ?? viewData.type,
             blockIds: cgr.blockIds,

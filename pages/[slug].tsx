@@ -21,7 +21,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const slug = context.params?.slug;
   const posts = await getAllPosts({ includedPages: true });
   const post = posts.find((t) => t.slug === slug);
-  if (!post?.id) return { notFound: true };
+  if (!post?.id) return { notFound: true, revalidate: 1 };
   if (post?.outer_link) {
     return {
       redirect: {
